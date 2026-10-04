@@ -1,66 +1,1150 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>郭伟涛 · 3D 作品展示</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="郭伟涛 · 人工智能技术应用 · Python / Java / C++ · AI 应用开发与工程落地。页面内含程序化生成的古建筑 3D 模型与高斯喷溅点云。" />
+<meta name="color-scheme" content="dark" />
+<title>郭伟涛｜人工智能技术应用 · Python / Java / C++</title>
 <style>
-  :root{
-    --ink:#e8edf2;
-    --ink-2:#9aa7b4;
-    --ink-3:#6b7887;
-    --line:#242c36;
-    --bg:#11151a;
-    --accent:#3fbf9c;
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0;height:100%}
-  body{
-    background:var(--bg);
-    color:var(--ink);
-    font-family:"PingFang SC","Microsoft YaHei","Source Han Sans SC",system-ui,sans-serif;
-    display:flex;align-items:center;justify-content:center;
-    padding:28px;
-    -webkit-font-smoothing:antialiased;
-  }
-  .card{
-    max-width:560px;width:100%;
-    border:1px solid var(--line);border-radius:16px;
-    padding:38px 34px 32px;
-    background:#151a21;
-  }
-  .tag{
-    display:inline-flex;align-items:center;gap:7px;
-    font-size:12px;color:var(--accent);
-    border:1px solid #1f4c42;background:#12211d;
-    border-radius:20px;padding:4px 11px;margin-bottom:20px;
-  }
-  .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
-  h1{margin:0 0 10px;font-size:26px;font-weight:600;letter-spacing:1px;line-height:1.3}
-  p{margin:0 0 8px;font-size:14px;line-height:1.75;color:var(--ink-2)}
-  .meta{margin-top:24px;padding-top:20px;border-top:1px solid var(--line);
-        font-size:13px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:8px 20px}
-  .meta b{color:var(--ink-2);font-weight:500}
-  a{color:var(--accent);text-decoration:none;border-bottom:1px solid #1f4c42}
-  a:hover{border-color:var(--accent)}
-  ul{margin:14px 0 0;padding-left:18px;font-size:13.5px;color:var(--ink-2);line-height:1.9}
-  ul li::marker{color:var(--ink-3)}
+/* ============================================================
+   设计令牌
+   ============================================================ */
+:root{
+  --bg:#07080a;
+  --bg-2:#0c0f12;
+  --panel:#0e1217;
+  --panel-2:#141a21;
+  --panel-3:#171e26;
+  --line:#1e262f;
+  --line-soft:#161d25;
+  --txt:#eef2f8;
+  --dim:#94a2b1;
+  --dim-2:#5f6d7c;
+  --accent:#9ff0c8;
+  --accent-2:#6ea8ff;
+  --amber:#f3c47a;
+  --red:#ff8a82;
+  --mono:"JetBrains Mono","Fira Code","Cascadia Code",ui-monospace,"Consolas","Monaco",monospace;
+  --ui:"PingFang SC","Microsoft YaHei","SF Pro Display",system-ui,-apple-system,"Helvetica Neue",sans-serif;
+  --r-lg:20px;
+  --r-md:14px;
+  --r-sm:10px;
+  --maxw:1340px;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:
+    radial-gradient(1200px 620px at 8% -8%, rgba(159,240,200,.075), transparent 62%),
+    radial-gradient(1000px 560px at 112% 4%, rgba(110,168,255,.065), transparent 58%),
+    radial-gradient(900px 700px at 50% 120%, rgba(159,240,200,.035), transparent 60%),
+    var(--bg);
+  color:var(--txt);
+  font-family:var(--ui);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* 细网格底纹，只在页面上半部可见 */
+body::before{
+  content:"";
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.014) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.014) 1px,transparent 1px);
+  background-size:54px 54px;
+  mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.35) 45%,transparent 78%);
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.35) 45%,transparent 78%);
+}
+
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+
+/* ============================================================
+   顶栏 + 阅读进度
+   ============================================================ */
+.topbar{
+  position:sticky;top:0;z-index:60;
+  backdrop-filter:blur(14px) saturate(140%);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  background:rgba(7,8,10,.72);
+  border-bottom:1px solid var(--line-soft);
+}
+.topbar-in{
+  max-width:var(--maxw);margin:0 auto;
+  padding:.7rem 2.6rem;
+  display:flex;align-items:center;gap:1.2rem;
+}
+.brand{
+  font-family:var(--mono);font-size:.82rem;letter-spacing:.06em;color:var(--txt);
+  display:flex;align-items:center;gap:.5rem;white-space:nowrap;
+}
+.brand .mark{
+  width:8px;height:8px;border-radius:2px;background:var(--accent);
+  box-shadow:0 0 0 3px rgba(159,240,200,.14);
+}
+.navlinks{margin-left:auto;display:flex;align-items:center;gap:.15rem;flex-wrap:wrap}
+.navlinks a{
+  font-size:.8rem;color:var(--dim);padding:.34rem .62rem;border-radius:8px;
+  transition:color .16s,background .16s;text-decoration:none;white-space:nowrap;
+}
+.navlinks a:hover{color:var(--txt);background:var(--panel-2);text-decoration:none}
+.navlinks a.cta{color:var(--accent);border:1px solid #27453c;background:rgba(159,240,200,.05)}
+.navlinks a.cta:hover{background:rgba(159,240,200,.11)}
+.scrollbar{height:2px;background:transparent}
+.scrollbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+
+/* ============================================================
+   布局
+   ============================================================ */
+.page{
+  position:relative;z-index:1;
+  max-width:var(--maxw);margin:0 auto;
+  padding:2.4rem 2.6rem 3.2rem;
+  display:flex;flex-direction:column;gap:1.5rem;
+}
+.columns{display:grid;grid-template-columns:minmax(0,1fr) 356px;gap:1.5rem;align-items:start}
+.col-main{display:flex;flex-direction:column;gap:1.5rem;min-width:0}
+.col-side{display:flex;flex-direction:column;gap:1.5rem;min-width:0}
+
+@media (max-width:1180px){
+  .columns{grid-template-columns:1fr}
+  .page{padding:1.9rem 1.5rem 2.8rem}
+  .topbar-in{padding:.62rem 1.5rem}
+}
+@media (max-width:560px){
+  .page{padding:1.4rem .95rem 2.4rem}
+  .topbar-in{padding:.55rem .95rem}
+  .navlinks a{padding:.3rem .45rem;font-size:.74rem}
+}
+
+/* ============================================================
+   通用面板
+   ============================================================ */
+.panel{
+  background:linear-gradient(180deg,var(--panel) 0%,var(--bg-2) 100%);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  box-shadow:0 1px 0 rgba(255,255,255,.025) inset,0 12px 34px -20px rgba(0,0,0,.7);
+}
+.panel.raised{background:linear-gradient(180deg,var(--bg-2) 0%,var(--panel) 100%)}
+.head{
+  display:flex;align-items:center;gap:.62rem;
+  font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--dim-2);
+  padding:1rem 1.35rem;
+  border-bottom:1px solid var(--line-soft);
+}
+.head .dot{
+  width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none;
+  box-shadow:0 0 0 3px rgba(159,240,200,.15);
+}
+.head .zh{letter-spacing:.06em;font-size:.78rem;text-transform:none;color:var(--dim);font-family:var(--ui);font-weight:600}
+.head .tail{margin-left:auto;font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;color:var(--dim-2)}
+.body{padding:1.25rem 1.35rem}
+
+/* ============================================================
+   Hero
+   ============================================================ */
+.hero{
+  position:relative;overflow:hidden;
+  padding:2.15rem 2.2rem 2.05rem;
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  background:
+    radial-gradient(340px 190px at 16% -14%, rgba(159,240,200,.085), transparent 72%),
+    linear-gradient(180deg,var(--panel) 0%,var(--bg-2) 100%);
+}
+.hero::after{
+  content:"";position:absolute;right:-70px;top:-70px;width:260px;height:260px;
+  background:radial-gradient(circle at 34% 34%, rgba(110,168,255,.14), transparent 66%);
+  pointer-events:none;
+}
+.name-row{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:.7rem}
+.name{
+  font-size:clamp(2.1rem,5.2vw,3.05rem);font-weight:800;
+  letter-spacing:-.028em;line-height:1.04;
+}
+.name .cursor{
+  display:inline-block;width:13px;height:13px;margin-left:.42rem;vertical-align:super;
+  background:var(--accent);border-radius:4px;
+  box-shadow:0 0 0 4px rgba(159,240,200,.2),0 0 16px rgba(159,240,200,.18);
+  animation:pulse 2.6s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 0 4px rgba(159,240,200,.2),0 0 16px rgba(159,240,200,.18)}
+  50%{box-shadow:0 0 0 9px rgba(159,240,200,.05),0 0 22px rgba(159,240,200,.1)}
+}
+.tagline{
+  color:var(--dim);font-size:1.02rem;font-weight:500;
+  border-left:2px solid var(--accent);padding-left:.85rem;max-width:64ch;
+}
+.meta{display:flex;flex-wrap:wrap;gap:.55rem 1.9rem;color:var(--dim);font-size:.9rem;margin-top:1rem}
+.meta b{color:var(--txt);font-weight:600;margin-right:.4rem}
+.meta .mono{font-family:var(--mono);font-size:.84rem;color:var(--code,#cfe6ff)}
+.tags{display:flex;flex-wrap:wrap;gap:.48rem;margin-top:1.15rem}
+.chip{
+  font-family:var(--mono);font-size:.76rem;color:var(--dim);
+  background:var(--panel-2);border:1px solid var(--line);
+  padding:.36rem .68rem;border-radius:var(--r-sm);
+  transition:border-color .16s,color .16s,transform .16s;
+}
+.chip:hover{border-color:var(--accent);color:var(--txt);transform:translateY(-1px)}
+.chip.python{border-color:#2a4a3c;color:#a4ffc4}
+.chip.java{border-color:#3f2c19;color:#ffd09a}
+.chip.cpp{border-color:#3a1d14;color:#ffc9ae}
+.chip.ghost{color:var(--dim-2)}
+
+/* ============================================================
+   3D 展区
+   ============================================================ */
+.showcase{
+  position:relative;overflow:hidden;
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  background:
+    radial-gradient(600px 260px at 78% -10%, rgba(110,168,255,.07), transparent 68%),
+    linear-gradient(180deg,var(--panel) 0%,var(--bg-2) 100%);
+  box-shadow:0 1px 0 rgba(255,255,255,.025) inset,0 18px 44px -28px rgba(0,0,0,.8);
+}
+.showcase-head{
+  display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;
+  padding:1rem 1.35rem;border-bottom:1px solid var(--line-soft);
+}
+.sc-title{display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap}
+.sc-title h2{font-size:.95rem;font-weight:700;letter-spacing:.01em}
+.sc-title span{font-size:.76rem;color:var(--dim-2);font-family:var(--mono)}
+.sc-tabs{margin-left:auto;display:flex;gap:.3rem;background:var(--bg-2);padding:.24rem;border-radius:12px;border:1px solid var(--line)}
+.sc-tab{
+  appearance:none;border:0;cursor:pointer;
+  font-family:var(--ui);font-size:.8rem;font-weight:600;
+  color:var(--dim);background:transparent;
+  padding:.42rem .86rem;border-radius:9px;
+  display:flex;align-items:center;gap:.42rem;
+  transition:color .16s,background .16s;
+}
+.sc-tab:hover{color:var(--txt)}
+.sc-tab[aria-selected="true"]{color:#04150f;background:linear-gradient(180deg,var(--accent),#7fdcb4);box-shadow:0 4px 14px -6px rgba(159,240,200,.5)}
+.sc-tab .k{font-family:var(--mono);font-size:.68rem;opacity:.7}
+
+.sc-stage{
+  position:relative;
+  height:clamp(340px,52vh,560px);
+  background:
+    radial-gradient(80% 70% at 50% 118%, rgba(159,240,200,.06), transparent 70%),
+    linear-gradient(180deg,#05070a 0%,#080b11 100%);
+  border-bottom:1px solid var(--line-soft);
+  overflow:hidden;
+}
+@media (max-width:1180px){ .sc-stage{height:clamp(320px,46vh,500px)} }
+@media (max-width:560px){ .sc-stage{height:clamp(280px,42vh,380px)} }
+
+.sc-view{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .3s ease}
+.sc-view.active{opacity:1;visibility:visible}
+
+model-viewer{width:100%;height:100%;background:transparent;--poster-color:transparent}
+model-viewer::part(default-progress-bar){display:none}
+
+.sc-frame{position:absolute;inset:0;border:0;width:100%;height:100%;background:#05070a}
+
+/* 装饰性角标 */
+.sc-corner{position:absolute;width:14px;height:14px;border:1px solid rgba(159,240,200,.35);pointer-events:none;z-index:6}
+.sc-corner.tl{top:12px;left:12px;border-right:0;border-bottom:0}
+.sc-corner.tr{top:12px;right:12px;border-left:0;border-bottom:0}
+.sc-corner.bl{bottom:12px;left:12px;border-right:0;border-top:0}
+.sc-corner.br{bottom:12px;right:12px;border-left:0;border-top:0}
+
+/* 加载遮罩 */
+.sc-overlay{
+  position:absolute;inset:0;z-index:8;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.85rem;
+  background:rgba(5,7,10,.86);backdrop-filter:blur(3px);
+  transition:opacity .35s ease;
+}
+.sc-overlay.hidden{opacity:0;pointer-events:none}
+.sc-overlay .ring{
+  width:38px;height:38px;border-radius:50%;
+  border:2px solid rgba(159,240,200,.16);border-top-color:var(--accent);
+  animation:spin 1s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sc-overlay .lbl{font-family:var(--mono);font-size:.76rem;color:var(--dim);letter-spacing:.06em}
+.sc-bar{width:min(240px,52%);height:3px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
+.sc-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .2s linear}
+
+/* 降级面板 */
+.sc-fallback{
+  position:absolute;inset:0;z-index:9;display:none;
+  flex-direction:column;align-items:center;justify-content:center;gap:.9rem;
+  background:linear-gradient(180deg,#05070a,#080b11);padding:1.2rem;text-align:center;
+}
+.sc-fallback.show{display:flex}
+.sc-fallback img{max-width:min(300px,42%);max-height:60%;border-radius:12px;border:1px solid var(--line);opacity:.92}
+.sc-fallback p{font-size:.82rem;color:var(--dim);max-width:46ch}
+.sc-fallback .why{font-family:var(--mono);font-size:.7rem;color:var(--dim-2);word-break:break-all}
+
+/* 触屏激活遮罩 */
+.sc-touchguard{
+  position:absolute;inset:0;z-index:7;display:none;
+  align-items:center;justify-content:center;
+  background:linear-gradient(180deg,rgba(5,7,10,.15),rgba(5,7,10,.5));
+  cursor:pointer;
+}
+.sc-touchguard.show{display:flex}
+.sc-touchguard span{
+  font-size:.8rem;color:var(--txt);background:rgba(14,18,23,.92);
+  border:1px solid var(--line);border-radius:99px;padding:.5rem 1.05rem;
+  box-shadow:0 8px 24px -12px rgba(0,0,0,.9);
+}
+
+/* 控制条 */
+.sc-controls{
+  display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;
+  padding:.85rem 1.35rem;
+}
+.sc-btn{
+  appearance:none;cursor:pointer;
+  font-family:var(--ui);font-size:.79rem;font-weight:600;color:var(--dim);
+  background:var(--panel-2);border:1px solid var(--line);
+  padding:.42rem .8rem;border-radius:9px;
+  display:inline-flex;align-items:center;gap:.42rem;
+  transition:color .16s,border-color .16s,background .16s;
+}
+.sc-btn:hover{color:var(--txt);border-color:#2c3946}
+.sc-btn[aria-pressed="true"]{color:#04150f;background:linear-gradient(180deg,var(--accent),#7fdcb4);border-color:transparent}
+.sc-btn .ico{width:13px;height:13px;flex:none}
+.sc-note{
+  margin-left:auto;font-size:.74rem;color:var(--dim-2);line-height:1.5;max-width:56ch;
+}
+.sc-note b{color:var(--dim);font-weight:600}
+@media (max-width:900px){ .sc-note{margin-left:0;flex-basis:100%} }
+
+.sc-foot{
+  padding:.7rem 1.35rem .95rem;
+  border-top:1px solid var(--line-soft);
+  font-size:.73rem;color:var(--dim-2);line-height:1.65;
+}
+.sc-foot b{color:var(--dim);font-weight:600}
+
+/* ============================================================
+   技能卡片
+   ============================================================ */
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem}
+@media (max-width:900px){ .grid-4{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:420px){ .grid-4{grid-template-columns:1fr} }
+
+.skill-card{
+  border:1px solid var(--line);border-radius:var(--r-md);
+  background:var(--panel-2);padding:.85rem 1rem;
+  transition:border-color .18s,transform .18s,box-shadow .18s,background .18s;
+}
+.skill-card:hover{
+  border-color:#33443f;transform:translateY(-2px);
+  box-shadow:0 12px 26px -16px rgba(0,0,0,.7);background:var(--panel-3);
+}
+.skill-card h4{
+  font-size:.66rem;letter-spacing:.17em;text-transform:uppercase;
+  color:var(--dim-2);margin-bottom:.6rem;
+}
+.skill-card ul{list-style:none}
+.skill-card li{
+  display:flex;justify-content:space-between;align-items:baseline;gap:.6rem;
+  font-size:.85rem;color:var(--dim);padding:.33rem 0;
+  border-bottom:1px dashed var(--line-soft);
+}
+.skill-card li:last-child{border-bottom:0}
+.skill-card li b{color:var(--txt);font-weight:600}
+.lv{font-family:var(--mono);font-size:.74rem;letter-spacing:.02em;color:var(--accent);flex:none}
+.lv.blue{color:var(--accent-2)}
+.lv.amber{color:var(--amber)}
+.lv.dimlv{color:var(--dim-2)}
+
+/* ============================================================
+   项目经历
+   ============================================================ */
+.proj{
+  position:relative;
+  border:1px solid var(--line);border-left:3px solid var(--line);
+  border-radius:var(--r-md);background:var(--panel-2);
+  padding:.95rem 1.15rem 1rem 1.25rem;margin-bottom:.8rem;
+  transition:border-color .18s,background .18s,transform .18s,box-shadow .18s;
+}
+.proj:last-child{margin-bottom:0}
+.proj:hover{
+  border-left-color:var(--accent);background:var(--panel-3);
+  transform:translateX(2px);
+  box-shadow:0 10px 26px -18px rgba(0,0,0,.8);
+}
+.proj .row1{display:flex;align-items:center;justify-content:space-between;gap:.9rem;margin-bottom:.5rem}
+.proj h3{font-size:1.02rem;font-weight:700;letter-spacing:-.012em}
+.tech{
+  font-family:var(--mono);font-size:.72rem;color:var(--dim);
+  background:var(--bg-2);border:1px solid var(--line);
+  padding:.2rem .58rem;border-radius:7px;white-space:nowrap;flex:none;
+}
+.proj .desc{font-size:.875rem;color:var(--dim);margin-bottom:.6rem;line-height:1.62}
+.proj ul{list-style:none}
+.proj li{
+  position:relative;font-size:.875rem;color:var(--dim);
+  padding:.28rem 0 .28rem 1.3rem;line-height:1.62;
+}
+.proj li::before{
+  content:"";position:absolute;left:.1rem;top:.62rem;
+  width:5px;height:5px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 0 2px rgba(159,240,200,.16);
+}
+.proj li b{color:var(--txt);font-weight:600}
+
+/* ============================================================
+   侧栏
+   ============================================================ */
+.kv{
+  display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
+  padding:.52rem 0;border-bottom:1px dashed var(--line-soft);
+}
+.kv:last-child{border-bottom:0}
+.kv .k{font-size:.85rem;color:var(--dim)}
+.kv .v{font-size:.9rem;font-weight:600;color:var(--txt);text-align:right}
+
+/* 照片位 */
+.photo-slot{
+  position:relative;border:1px dashed #2c3946;border-radius:var(--r-md);
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.012),transparent),
+    var(--bg-2);
+  aspect-ratio:3/4;max-height:320px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;
+  text-align:center;padding:1rem;
+}
+.photo-slot .ph-ico{
+  width:44px;height:44px;border-radius:12px;border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;color:var(--dim-2);
+  background:var(--panel-2);
+}
+.photo-slot .ph-t{font-size:.84rem;color:var(--dim);font-weight:600;letter-spacing:.04em}
+.photo-slot .ph-s{font-size:.7rem;color:var(--dim-2);line-height:1.6;max-width:24ch}
+.photo-slot code{font-family:var(--mono);font-size:.68rem;color:var(--accent)}
+.photo-img{width:100%;border-radius:var(--r-md);border:1px solid var(--line);display:block}
+
+/* 教育背景 */
+.edu-item{display:flex;gap:.85rem}
+.edu-rail{display:flex;flex-direction:column;align-items:center;padding-top:.35rem}
+.edu-rail i{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px rgba(159,240,200,.16);flex:none}
+.edu-rail s{flex:1;width:1px;background:linear-gradient(180deg,var(--line),transparent);text-decoration:none}
+.edu-body b{display:block;font-size:.95rem;font-weight:700;color:var(--txt)}
+.edu-body .m{display:block;font-size:.82rem;color:var(--dim);margin-top:.15rem}
+.edu-body .t{display:block;font-family:var(--mono);font-size:.76rem;color:var(--accent);margin-top:.3rem;letter-spacing:.02em}
+.edu-note{margin-top:.7rem;font-size:.75rem;color:var(--dim-2);line-height:1.6}
+
+/* 学习节奏 */
+.timeline{display:flex;flex-direction:column}
+.tl-item{display:flex;gap:.85rem;font-size:.86rem;padding:.42rem 0}
+.tl-time{font-family:var(--mono);font-size:.78rem;color:var(--accent);min-width:2.5rem;padding-top:.12rem;letter-spacing:.02em}
+.tl-body{color:var(--dim);line-height:1.6}
+.tl-body b{display:block;color:var(--txt);font-weight:600;margin-bottom:.08rem}
+
+/* 特点 */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:.4rem .9rem}
+.stat{display:flex;justify-content:space-between;align-items:baseline;font-size:.86rem;color:var(--dim);padding:.3rem 0}
+.stat span:last-child{font-family:var(--mono);font-weight:600;color:var(--txt)}
+.badges{margin-top:.85rem;display:flex;gap:.44rem;flex-wrap:wrap}
+.badge{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-family:var(--mono);font-size:.73rem;color:var(--dim);
+  background:var(--panel-2);border:1px solid var(--line);
+  padding:.26rem .66rem;border-radius:999px;
+}
+.badge .n{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 2px rgba(159,240,200,.22)}
+.badge .n.amber{background:var(--amber);box-shadow:0 0 0 2px rgba(243,196,122,.22)}
+.badge .n.blue{background:var(--accent-2);box-shadow:0 0 0 2px rgba(110,168,255,.22)}
+
+/* ============================================================
+   页脚
+   ============================================================ */
+footer{
+  margin-top:.6rem;padding-top:1.1rem;
+  border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+  font-size:.8rem;color:var(--dim-2);
+}
+footer .mono{font-family:var(--mono);font-size:.76rem}
+
+/* ============================================================
+   入场动画
+   ============================================================ */
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s cubic-bezier(.2,.7,.3,1),transform .6s cubic-bezier(.2,.7,.3,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  .name .cursor{animation:none}
+  html{scroll-behavior:auto}
+}
+
+/* 移动端微调 */
+@media (max-width:560px){
+  .hero{padding:1.5rem 1.25rem 1.45rem}
+  .body{padding:1.05rem 1.1rem}
+  .head{padding:.9rem 1.1rem}
+  .showcase-head{padding:.85rem 1.1rem}
+  .sc-controls{padding:.75rem 1.1rem}
+  .sc-foot{padding:.65rem 1.1rem .85rem}
+  .proj{padding:.85rem 1rem .9rem 1.05rem}
+}
 </style>
 </head>
 <body>
-  <main class="card">
-    <span class="tag"><span class="dot"></span>建设中</span>
-    <h1>郭伟涛 · 3D 作品展示</h1>
-    <p>这个页面将承载可交互 3D 模型与高斯喷溅（Gaussian Splatting）渲染，题材取自古建筑方向。</p>
-    <ul>
-      <li>可拖拽旋转的 <code>.glb</code> 模型（WebGL）</li>
-      <li>高斯喷溅点云渲染，支持低配模式</li>
-      <li>全资源本地化，断网也能演示</li>
-    </ul>
-    <div class="meta">
-      <span>简历：<a href="https://vilot888.github.io/Resume20260907/">vilot888.github.io/Resume20260907</a></span>
-      <span>源码：<a href="https://github.com/vilot888/resume-3d">github.com/vilot888/resume-3d</a></span>
+
+<!-- ============================ 顶栏 ============================ -->
+<div class="topbar">
+  <div class="topbar-in">
+    <span class="brand"><span class="mark"></span>郭伟涛 · 简历</span>
+    <nav class="navlinks" aria-label="页面导航">
+      <a href="#showcase">3D 展区</a>
+      <a href="#skills">技能</a>
+      <a href="#projects">项目</a>
+      <a href="#tags">能力标签</a>
+      <a href="#education">教育</a>
+      <a class="cta" href="resume-print.html">打印 / PDF 版</a>
+    </nav>
+  </div>
+  <div class="scrollbar"><i id="scrollbarFill"></i></div>
+</div>
+
+<div class="page">
+
+  <!-- ============================ Hero ============================ -->
+  <header class="hero reveal">
+    <div class="name-row">
+      <h1 class="name">郭伟涛<span class="cursor" aria-hidden="true"></span></h1>
+      <span class="tagline">人工智能技术应用</span>
     </div>
-  </main>
+    <div class="meta">
+      <span><b>专业</b>人工智能技术应用</span>
+      <span><b>主方向</b>AI 应用开发与工程落地</span>
+      <span><b>技术栈</b><span class="mono">Python / Java / C++</span></span>
+      <span><b>定位</b>能写前端界面，也能把后端与算法活儿接上</span>
+    </div>
+    <div class="tags">
+      <span class="chip python">Python</span>
+      <span class="chip java">Java</span>
+      <span class="chip cpp">C++</span>
+      <span class="chip">AI 应用</span>
+      <span class="chip">数据处理</span>
+      <span class="chip">工程落地</span>
+      <span class="chip">界面实现</span>
+      <span class="chip ghost">WebGL / 3D</span>
+    </div>
+  </header>
+
+  <!-- ============================ 3D 展区 ============================ -->
+  <section class="showcase reveal" id="showcase" aria-labelledby="showcaseTitle">
+    <div class="showcase-head">
+      <div class="sc-title">
+        <h2 id="showcaseTitle">3D 展区</h2>
+        <span>程序化建模 · 网格转喷溅 · 全部本地资源</span>
+      </div>
+      <div class="sc-tabs" role="tablist" aria-label="3D 展示方式">
+        <button class="sc-tab" id="tabA" role="tab" aria-selected="true" aria-controls="viewA" data-view="a">
+          <span class="k">A</span>3D 模型
+        </button>
+        <button class="sc-tab" id="tabB" role="tab" aria-selected="false" aria-controls="viewB" data-view="b">
+          <span class="k">B</span>高斯喷溅
+        </button>
+      </div>
+    </div>
+
+    <div class="sc-stage" id="scStage">
+      <!-- A：可拖拽 .glb 模型 -->
+      <div class="sc-view active" id="viewA" role="tabpanel" aria-labelledby="tabA">
+        <model-viewer
+          id="mv"
+          src="assets/model.glb"
+          alt="程序化生成的多层古塔 3D 模型，可拖拽旋转与缩放"
+          camera-controls
+          auto-rotate
+          rotation-per-second="14deg"
+          interaction-prompt="none"
+          shadow-intensity="0.9"
+          shadow-softness="0.85"
+          exposure="1.08"
+          environment-image="neutral"
+          field-of-view="30deg"
+          camera-orbit="34deg 74deg auto"
+          touch-action="pan-y"
+          loading="eager"
+          reveal="auto">
+        </model-viewer>
+      </div>
+
+      <!-- B：高斯喷溅（同源 iframe，便于按画质重载并隔离全局变量） -->
+      <div class="sc-view" id="viewB" role="tabpanel" aria-labelledby="tabB">
+        <iframe class="sc-frame" id="splatFrame" title="高斯喷溅点云视图"
+                src="about:blank" loading="lazy" allow="fullscreen"></iframe>
+      </div>
+
+      <span class="sc-corner tl" aria-hidden="true"></span>
+      <span class="sc-corner tr" aria-hidden="true"></span>
+      <span class="sc-corner bl" aria-hidden="true"></span>
+      <span class="sc-corner br" aria-hidden="true"></span>
+
+      <!-- 触屏：先让页面能滚动，点一下才把交互交给 3D -->
+      <div class="sc-touchguard" id="touchGuard" role="button" tabindex="0">
+        <span>点击开始交互 · 拖动旋转，双指缩放</span>
+      </div>
+
+      <!-- 加载进度 -->
+      <div class="sc-overlay" id="scOverlay">
+        <div class="ring"></div>
+        <div class="lbl" id="scLabel">正在准备 3D 视图…</div>
+        <div class="sc-bar"><i id="scBar"></i></div>
+      </div>
+
+      <!-- 降级：WebGL 不可用或加载失败时显示静态渲染图 -->
+      <div class="sc-fallback" id="scFallback">
+        <img id="scFallbackImg" src="assets/model-preview.jpg" alt="古塔模型的静态渲染图" />
+        <p>当前环境无法启动 WebGL 实时渲染，已切换为静态渲染图。</p>
+        <p class="why" id="scWhy"></p>
+      </div>
+    </div>
+
+    <div class="sc-controls">
+      <button class="sc-btn" id="btnRotate" aria-pressed="true">
+        <svg class="ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M13.5 8a5.5 5.5 0 1 1-1.9-4.2"/><path d="M13.6 1.9v3.2h-3.2"/></svg>
+        自动旋转
+      </button>
+      <button class="sc-btn" id="btnReset">
+        <svg class="ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="8" cy="8" r="5.6"/><path d="M8 5.2v3l2 1.4"/></svg>
+        重置视角
+      </button>
+      <button class="sc-btn" id="btnLow" aria-pressed="false">
+        <svg class="ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M2 12V6.5M6 12V3.5M10 12V8M14 12V5"/></svg>
+        低配模式
+      </button>
+      <button class="sc-btn" id="btnFull">
+        <svg class="ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M6 2H2v4M10 2h4v4M6 14H2v-4M10 14h4v-4"/></svg>
+        全屏
+      </button>
+      <p class="sc-note">A 档为程序化生成的低面数模型（拖拽旋转 / 滚轮缩放）；B 档为 <b>网格转喷溅</b>点云渲染。</p>
+    </div>
+
+    <div class="sc-foot">
+      <b>关于 B 档的如实说明：</b>这里的喷溅数据是在 A 档模型的网格表面均匀采样约 40 万个点得到的，
+      属于<b>风格化点云渲染</b>，不是多视角照片重建的照片级结果。
+      换成真实重建只需替换 <code style="font-family:var(--mono);color:var(--accent)">assets/scene.splat</code>，步骤见 <code style="font-family:var(--mono);color:var(--accent)">UPGRADE-SPLAT.md</code>。
+    </div>
+  </section>
+
+  <!-- ============================ 双栏 ============================ -->
+  <div class="columns">
+
+    <!-- ------------------------ 主栏 ------------------------ -->
+    <div class="col-main">
+
+      <!-- 技能与能力 -->
+      <section class="panel reveal" id="skills">
+        <div class="head"><span class="dot"></span><span class="zh">技能与能力</span><span class="tail">熟练 / 了解</span></div>
+        <div class="body">
+          <div class="grid-4">
+            <div class="skill-card">
+              <h4>Python</h4>
+              <ul>
+                <li><b>工程与脚本开发</b><span class="lv">熟练</span></li>
+                <li><b>数据处理</b><span class="lv">熟练</span></li>
+                <li><b>工具链搭建</b><span class="lv">熟练</span></li>
+                <li><b>服务与接口</b><span class="lv blue">了解</span></li>
+              </ul>
+            </div>
+            <div class="skill-card">
+              <h4>Java</h4>
+              <ul>
+                <li><b>业务模块开发</b><span class="lv">熟练</span></li>
+                <li><b>面向对象设计</b><span class="lv">熟练</span></li>
+                <li><b>接口组织</b><span class="lv blue">了解</span></li>
+                <li><b>并发 / 集合基础</b><span class="lv blue">了解</span></li>
+              </ul>
+            </div>
+            <div class="skill-card">
+              <h4>C++</h4>
+              <ul>
+                <li><b>基础程序开发</b><span class="lv">熟练</span></li>
+                <li><b>内存 / 指针理解</b><span class="lv blue">了解</span></li>
+                <li><b>性能敏感逻辑</b><span class="lv blue">了解</span></li>
+                <li><b>算法实现辅助</b><span class="lv blue">了解</span></li>
+              </ul>
+            </div>
+            <div class="skill-card">
+              <h4>AI 应用</h4>
+              <ul>
+                <li><b>模型能力理解</b><span class="lv">熟练</span></li>
+                <li><b>调用与集成</b><span class="lv blue">了解</span></li>
+                <li><b>数据流程设计</b><span class="lv">熟练</span></li>
+                <li><b>工程落地思路</b><span class="lv">熟练</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 项目经历 -->
+      <section class="panel reveal" id="projects">
+        <div class="head"><span class="dot"></span><span class="zh">项目经历</span><span class="tail">5 个项目</span></div>
+        <div class="body">
+
+          <article class="proj">
+            <div class="row1">
+              <h3>Python 数据处理与 AI 辅助系统</h3>
+              <span class="tech">Python · 数据处理</span>
+            </div>
+            <p class="desc">把来源不一、格式不齐的数据整理成可复用结构，重点在清洗规则、异常拦截和可重复执行的流程。</p>
+            <ul>
+              <li><b>统一 CSV / Excel / JSON 多源输入</b>到同一字段模型，落库前先过校验层，字段缺失与类型冲突在下游报错之前就被拦下</li>
+              <li>把清洗规则抽成配置项，新增数据源只改配置、不动主流程；异常样本单独落盘并记录原因，便于回溯</li>
+              <li>将重复的核对与汇总任务脚本化，按需一键重跑，替代人工反复整理</li>
+              <li>流程内置去重、范围校验与空值策略，<b>输出结果可直接进入后续分析</b></li>
+            </ul>
+          </article>
+
+          <article class="proj">
+            <div class="row1">
+              <h3>Java 业务模块开发</h3>
+              <span class="tech">Java · 面向对象</span>
+            </div>
+            <p class="desc">承担业务模块的设计与实现，关注职责拆分、接口组织和后续可维护性。</p>
+            <ul>
+              <li><b>按职责划分包与模块</b>，公共能力下沉为可复用组件，避免业务判断都堆在入口层</li>
+              <li>梳理核心数据流转与状态变更路径，把散落在各处的判断收敛到明确的状态处理位置</li>
+              <li>接口先行地建模业务实体与行为，方便替换实现、单独测试</li>
+              <li>对常见故障形成固定排查顺序（日志定位 → 入参校验 → 数据状态核对），不只停在"功能能跑"</li>
+            </ul>
+          </article>
+
+          <article class="proj">
+            <div class="row1">
+              <h3>C++ 基础程序与算法实现</h3>
+              <span class="tech">C++ · 算法</span>
+            </div>
+            <p class="desc">用 C++ 完成基础程序与算法实现，先保证正确性，再关注资源使用与结构清晰。</p>
+            <ul>
+              <li><b>独立完成基础开发任务</b>，先覆盖边界条件，再谈实现方式</li>
+              <li>理解指针、引用与对象生命周期，主动规避悬空指针、数组越界与资源未释放</li>
+              <li>在规模可控的场景做过实现层面的优化（减少重复遍历、避免无谓拷贝）</li>
+              <li>能把算法思路翻译成可运行代码，并配最小可复现用例自检</li>
+            </ul>
+          </article>
+
+          <article class="proj">
+            <div class="row1">
+              <h3>人工智能技术应用探索项目</h3>
+              <span class="tech">Python · AI 应用</span>
+            </div>
+            <p class="desc">围绕「模型能解什么、工程怎么接」做的落地探索。</p>
+            <ul>
+              <li><b>梳理模型的能力边界与典型失败模式</b>，明确哪些环节该交给模型、哪些该由规则与人工兜底</li>
+              <li>用 Python 完成调用侧封装：入参组织、超时重试、返回结构解析</li>
+              <li>对模型输出做结构化校验与兜底（格式校验、缺字段处理、失败重试），避免脏结果流入业务</li>
+              <li>把 AI 需求拆成<b>「模型能不能解」和「工程怎么接」</b>两层分别评估，再决定技术方案</li>
+            </ul>
+          </article>
+
+          <article class="proj">
+            <div class="row1">
+              <h3>综合开发与应用实践</h3>
+              <span class="tech">Python · Java · C++</span>
+            </div>
+            <p class="desc">在同一批任务里组合多种语言与方向，按场景选型。</p>
+            <ul>
+              <li><b>Python 负责快速实现、数据处理与脚本工具</b>，缩短验证想法的时间</li>
+              <li><b>Java 负责偏业务、需要结构化的部分</b>，便于长期维护与扩展</li>
+              <li><b>C++ 负责对性能或底层理解要求更高的部分</b></li>
+              <li>按场景在三种语言之间切换，不把一种思路套到所有问题上</li>
+            </ul>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- 能力标签 -->
+      <section class="panel reveal" id="tags">
+        <div class="head"><span class="dot"></span><span class="zh">能力标签</span><span class="tail">开发 / 实现 / 工程 / 扩展</span></div>
+        <div class="body">
+          <div class="grid-4">
+            <div class="skill-card">
+              <h4>开发</h4>
+              <ul>
+                <li><b>Python 工程</b><span class="lv">熟练</span></li>
+                <li><b>Java 业务</b><span class="lv">熟练</span></li>
+                <li><b>C++ 基础</b><span class="lv blue">了解</span></li>
+              </ul>
+            </div>
+            <div class="skill-card">
+              <h4>实现</h4>
+              <ul>
+                <li><b>数据处理</b><span class="lv">熟练</span></li>
+                <li><b>逻辑实现</b><span class="lv">熟练</span></li>
+                <li><b>需求拆解</b><span class="lv">熟练</span></li>
+              </ul>
+            </div>
+            <div class="skill-card">
+              <h4>工程</h4>
+              <ul>
+                <li><b>动手落地</b><span class="lv">熟练</span></li>
+                <li><b>结果导向</b><span class="lv">熟练</span></li>
+                <li><b>结构思维</b><span class="lv blue">了解</span></li>
+              </ul>
+            </div>
+            <div class="skill-card">
+              <h4>扩展</h4>
+              <ul>
+                <li><b>界面实现</b><span class="lv blue">了解</span></li>
+                <li><b>算法辅助</b><span class="lv blue">了解</span></li>
+                <li><b>模型集成</b><span class="lv blue">了解</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ------------------------ 侧栏 ------------------------ -->
+    <aside class="col-side">
+
+      <!-- 照片位（留给你自己放） -->
+      <section class="panel reveal" id="photo">
+        <div class="head"><span class="dot"></span><span class="zh">照片</span><span class="tail">预留位置</span></div>
+        <div class="body">
+          <div class="photo-slot" id="photoSlot">
+            <span class="ph-ico" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                <rect x="3" y="5" width="18" height="14" rx="2.5"/>
+                <circle cx="12" cy="12" r="3.6"/>
+                <path d="M8.5 5l1.2-2h4.6L15.5 5"/>
+              </svg>
+            </span>
+            <span class="ph-t">照片位</span>
+            <span class="ph-s">把照片存成 <code>assets/photo.jpg</code>，再打开下面那行注释即可。</span>
+          </div>
+          <!-- 放照片时保留上面那块占位，去掉下面这行注释即可：
+          <img class="photo-img" src="assets/photo.jpg" alt="郭伟涛 证件照" />
+          -->
+        </div>
+      </section>
+
+      <!-- 个人信息 -->
+      <section class="panel reveal">
+        <div class="head"><span class="dot"></span><span class="zh">个人信息</span></div>
+        <div class="body">
+          <div class="kv"><span class="k">姓名</span><span class="v">郭伟涛</span></div>
+          <div class="kv"><span class="k">专业</span><span class="v">人工智能技术应用</span></div>
+          <div class="kv"><span class="k">主方向</span><span class="v">AI 应用开发与工程落地</span></div>
+          <div class="kv"><span class="k">技术栈</span><span class="v">Python / Java / C++</span></div>
+          <div class="kv"><span class="k">定位</span><span class="v">能写界面，也能搭后端与算法</span></div>
+        </div>
+      </section>
+
+      <!-- 教育背景 -->
+      <section class="panel reveal" id="education">
+        <div class="head"><span class="dot"></span><span class="zh">教育背景</span></div>
+        <div class="body">
+          <div class="edu-item">
+            <div class="edu-rail"><i></i><s></s></div>
+            <div class="edu-body">
+              <b>广东科学技术职业学院</b>
+              <span class="m">人工智能技术应用</span>
+              <span class="t">2025.09 – 2028.06 · 在读</span>
+            </div>
+          </div>
+          <p class="edu-note">在校期间以 Python / Java / C++ 为主线推进专业方向，并把课程任务往可运行、可演示的项目形态上做。</p>
+        </div>
+      </section>
+
+      <!-- 学习节奏 -->
+      <section class="panel reveal">
+        <div class="head"><span class="dot"></span><span class="zh">学习节奏</span></div>
+        <div class="body">
+          <div class="timeline">
+            <div class="tl-item"><div class="tl-time">在学</div><div class="tl-body"><b>工程化思维</b>在真实开发里持续练</div></div>
+            <div class="tl-item"><div class="tl-time">在练</div><div class="tl-body"><b>Python / Java</b>常用语言保持熟练</div></div>
+            <div class="tl-item"><div class="tl-time">在补</div><div class="tl-body"><b>C++ 与底层理解</b>边用边打基础</div></div>
+            <div class="tl-item"><div class="tl-time">在看</div><div class="tl-body"><b>AI 技术应用</b>怎么更实地落地</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 特点 -->
+      <section class="panel reveal">
+        <div class="head"><span class="dot"></span><span class="zh">特点</span></div>
+        <div class="body">
+          <div class="stat-grid">
+            <div class="stat"><span>动手能力</span><span>强</span></div>
+            <div class="stat"><span>表达风格</span><span>实</span></div>
+            <div class="stat"><span>项目视角</span><span>全链路</span></div>
+            <div class="stat"><span>语言切换</span><span>灵活</span></div>
+          </div>
+          <div class="badges">
+            <span class="badge"><span class="n"></span>动手型</span>
+            <span class="badge"><span class="n amber"></span>不浮</span>
+            <span class="badge"><span class="n blue"></span>工程味</span>
+          </div>
+        </div>
+      </section>
+
+    </aside>
+  </div>
+
+  <footer>
+    <div>郭伟涛 · 人工智能技术应用</div>
+    <div class="mono">Python · Java · C++ · AI 应用与工程落地</div>
+    <div class="mono">3D 与喷溅资源全部同源，断网也能演示</div>
+  </footer>
+
+</div>
+
+<!-- ============================ 页面脚本 ============================ -->
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- 1. 入场动画 ---------- */
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var items = document.querySelectorAll('.reveal');
+  if (reduce || !('IntersectionObserver' in window)) {
+    items.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
+    items.forEach(function (el, i) {
+      el.style.transitionDelay = Math.min(i * 45, 220) + 'ms';
+      io.observe(el);
+    });
+  }
+
+  /* ---------- 2. 顶栏阅读进度 ---------- */
+  var fill = document.getElementById('scrollbarFill');
+  var ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      fill.style.width = (h > 0 ? Math.min(100, (window.scrollY / h) * 100) : 0) + '%';
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ---------- 3. 3D 展区 ---------- */
+  var stage      = document.getElementById('scStage');
+  var tabs       = [document.getElementById('tabA'), document.getElementById('tabB')];
+  var views      = { a: document.getElementById('viewA'), b: document.getElementById('viewB') };
+  var mv         = document.getElementById('mv');
+  var frame      = document.getElementById('splatFrame');
+  var overlay    = document.getElementById('scOverlay');
+  var label      = document.getElementById('scLabel');
+  var bar        = document.getElementById('scBar');
+  var fallback   = document.getElementById('scFallback');
+  var why        = document.getElementById('scWhy');
+  var touchGuard = document.getElementById('touchGuard');
+  var btnRotate  = document.getElementById('btnRotate');
+  var btnReset   = document.getElementById('btnReset');
+  var btnLow     = document.getElementById('btnLow');
+  var btnFull    = document.getElementById('btnFull');
+
+  var current = 'a';
+  var lowSpec = false;
+  var splatLoaded = false;
+  var webgl = (function () {
+    try {
+      var c = document.createElement('canvas');
+      return !!(c.getContext('webgl2') || c.getContext('webgl'));
+    } catch (e) { return false; }
+  })();
+  var webgl2 = (function () {
+    try { return !!document.createElement('canvas').getContext('webgl2'); } catch (e) { return false; }
+  })();
+
+  function setOverlay(show, text, pct) {
+    if (text != null) { label.textContent = text; }
+    if (pct != null) { bar.style.width = Math.max(0, Math.min(100, pct)) + '%'; }
+    overlay.classList.toggle('hidden', !show);
+  }
+  function degrade(msg) {
+    why.textContent = msg ? String(msg) : '';
+    fallback.classList.add('show');
+    setOverlay(false);
+  }
+
+  /* 触屏设备：先让页面能正常滚动，用户点一下才把指针交互交给 3D */
+  var isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+  if (isTouch) {
+    stage.classList.add('needs-tap');
+    touchGuard.classList.add('show');
+    stage.style.pointerEvents = 'none';
+    touchGuard.style.pointerEvents = 'auto';
+  }
+  function releaseTouch() {
+    if (!touchGuard.classList.contains('show')) return;
+    touchGuard.classList.remove('show');
+    stage.style.pointerEvents = '';
+  }
+  touchGuard.addEventListener('click', releaseTouch);
+  touchGuard.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); releaseTouch(); }
+  });
+
+  /* ---- model-viewer ---- */
+  var mvReady = false;
+  if (!mv) {
+    degrade('缺少 model-viewer 元素');
+  } else if (!webgl) {
+    degrade('WebGL 不可用');
+  } else {
+    mv.addEventListener('progress', function (e) {
+      if (current !== 'a' || mvReady) return;
+      var p = e.detail && typeof e.detail.totalProgress === 'number' ? e.detail.totalProgress * 100 : 0;
+      setOverlay(true, '正在加载 3D 模型…', p);
+    });
+    mv.addEventListener('load', function () {
+      mvReady = true;
+      setOverlay(false);
+    });
+    mv.addEventListener('error', function (e) {
+      var d = (e.detail && (e.detail.type || e.detail.sourceError && e.detail.sourceError.message)) || 'model.glb 加载失败';
+      degrade(d);
+    });
+    setTimeout(function () {
+      if (!mvReady && !fallback.classList.contains('show') && current === 'a') {
+        degrade('模型在预期时间内没有完成加载');
+      }
+    }, 20000);
+  }
+
+  /* ---- 高斯喷溅 ---- */
+  var splatTimer = null;
+  function loadSplat() {
+    if (!webgl2) { degrade('WebGL2 不可用，喷溅渲染需要 WebGL2'); return; }
+    splatLoaded = false;
+    setOverlay(true, lowSpec ? '正在加载低配喷溅…' : '正在加载高斯喷溅点云…', 0);
+    frame.src = 'assets/splat.html?q=' + (lowSpec ? 'low' : 'high');
+    clearTimeout(splatTimer);
+    splatTimer = setTimeout(function () {
+      if (!splatLoaded && current === 'b') { degrade('喷溅数据在预期时间内没有完成加载'); }
+    }, 45000);
+  }
+  function unloadSplat() {
+    clearTimeout(splatTimer);
+    frame.src = 'about:blank';
+  }
+
+  window.addEventListener('message', function (ev) {
+    var d = ev.data;
+    if (!d || d.source !== 'splat' || current !== 'b') return;
+    if (d.type === 'progress') {
+      setOverlay(true, '正在加载高斯喷溅点云…', d.value);
+    } else if (d.type === 'ready') {
+      splatLoaded = true;
+      setOverlay(false);
+    } else if (d.type === 'error') {
+      degrade(d.message);
+    }
+  });
+
+  /* ---- 切换 ---- */
+  function activate(v) {
+    if (v === current) return;
+    current = v;
+    tabs.forEach(function (t) { t.setAttribute('aria-selected', String(t.dataset.view === v)); });
+    Object.keys(views).forEach(function (k) { views[k].classList.toggle('active', k === v); });
+    fallback.classList.remove('show');
+    if (v === 'b') {
+      if (!splatLoaded) loadSplat();
+    } else {
+      unloadSplat();
+      setOverlay(!mvReady && webgl, '正在加载 3D 模型…', 0);
+    }
+    if (isTouch) releaseTouch();
+  }
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () { activate(t.dataset.view); });
+  });
+
+  /* ---- 控制条 ---- */
+  btnRotate.addEventListener('click', function () {
+    var on = btnRotate.getAttribute('aria-pressed') === 'true';
+    btnRotate.setAttribute('aria-pressed', String(!on));
+    if (mv) { mv.autoRotate = !on; }
+    if (frame.contentWindow) {
+      frame.contentWindow.postMessage({ source: 'parent', type: 'autorotate', value: !on }, '*');
+    }
+  });
+
+  btnReset.addEventListener('click', function () {
+    if (mv) { mv.cameraOrbit = '34deg 74deg auto'; mv.fieldOfView = '30deg'; mv.jumpCameraToGoal && mv.jumpCameraToGoal(); }
+    unloadSplat();
+    splatLoaded = false;
+    if (current === 'b') { loadSplat(); }
+  });
+
+  btnLow.addEventListener('click', function () {
+    lowSpec = !lowSpec;
+    btnLow.setAttribute('aria-pressed', String(lowSpec));
+    if (mv) {
+      mv.shadowIntensity = lowSpec ? '0' : '0.9';
+      mv.exposure = lowSpec ? '1' : '1.08';
+    }
+    if (current === 'b') { loadSplat(); } else if (splatLoaded) { unloadSplat(); splatLoaded = false; }
+  });
+
+  btnFull.addEventListener('click', function () {
+    var el = stage;
+    if (document.fullscreenElement) { document.exitFullscreen(); return; }
+    (el.requestFullscreen || el.webkitRequestFullscreen || function () {}).call(el);
+  });
+  document.addEventListener('fullscreenchange', function () {
+    btnFull.setAttribute('aria-pressed', String(!!document.fullscreenElement));
+  });
+
+  /* 视口进入展区时才开始准备，减少首屏开销 */
+  if ('IntersectionObserver' in window && mv) {
+    var started = false;
+    var so = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting && !started) {
+          started = true;
+          setOverlay(true, '正在加载 3D 模型…', 0);
+          so.disconnect();
+        }
+      });
+    }, { rootMargin: '220px' });
+    so.observe(stage);
+  }
+
+  /* 页面隐藏时停掉喷溅渲染，别在后台空转 GPU */
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) { unloadSplat(); splatLoaded = false; }
+    else if (current === 'b') { loadSplat(); }
+  });
+
+  /* 深链：?tab=b 直接打开高斯喷溅那一档（也方便做自动化截图/分享） */
+  try {
+    var qs = new URLSearchParams(location.search);
+    if (qs.get('tab') === 'b') { activate('b'); }
+    if (qs.get('low') === '1') { btnLow.click(); }
+  } catch (e) {}
+})();
+</script>
 </body>
 </html>
