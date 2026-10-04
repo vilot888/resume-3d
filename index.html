@@ -1007,29 +1007,43 @@ footer .mono{font-family:var(--mono);font-size:.76rem}
 
   /* ---- model-viewer ---- */
   var mvReady = false;
+  var mvProgress = 0;
+  var mvWatchdog = null;
+  /* 看门狗：只有在「完全没有进展」时才判定失败；一有 progress 就重置计时，
+     避免慢网络下把还在正常下载的模型误判成加载失败。 */
+  function armWatchdog(ms) {
+    clearTimeout(mvWatchdog);
+    mvWatchdog = setTimeout(function () {
+      if (!mvReady && !fallback.classList.contains('show') && current === 'a') {
+        degrade(mvProgress > 0
+          ? ('模型下载在 ' + Math.round(mvProgress) + '% 处停滞')
+          : '模型在预期时间内没有开始加载');
+      }
+    }, ms);
+  }
   if (!mv) {
     degrade('缺少 model-viewer 元素');
   } else if (!webgl) {
     degrade('WebGL 不可用');
   } else {
     mv.addEventListener('progress', function (e) {
-      if (current !== 'a' || mvReady) return;
       var p = e.detail && typeof e.detail.totalProgress === 'number' ? e.detail.totalProgress * 100 : 0;
-      setOverlay(true, '正在加载 3D 模型…', p);
+      if (p > mvProgress) { mvProgress = p; }
+      if (current === 'a' && !mvReady) {
+        setOverlay(true, '正在加载 3D 模型…', mvProgress);
+        armWatchdog(25000);
+      }
     });
     mv.addEventListener('load', function () {
       mvReady = true;
+      clearTimeout(mvWatchdog);
       setOverlay(false);
     });
     mv.addEventListener('error', function (e) {
-      var d = (e.detail && (e.detail.type || e.detail.sourceError && e.detail.sourceError.message)) || 'model.glb 加载失败';
+      var d = (e.detail && (e.detail.type || (e.detail.sourceError && e.detail.sourceError.message))) || 'model.glb 加载失败';
       degrade(d);
     });
-    setTimeout(function () {
-      if (!mvReady && !fallback.classList.contains('show') && current === 'a') {
-        degrade('模型在预期时间内没有完成加载');
-      }
-    }, 20000);
+    armWatchdog(20000);
   }
 
   /* ---- 高斯喷溅 ---- */
