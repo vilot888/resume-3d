@@ -430,6 +430,9 @@ footer .sp{margin-left:auto}
    ===================================================================== */
 .rv{opacity:0;transform:translateY(20px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
 .rv.in{opacity:1;transform:none}
+/* 安全网：打印、无脚本、以及爬虫抓取时，内容必须完整可见，
+   不能因为滚动动画没触发就整页空白 */
+@media print{ .rv{opacity:1 !important;transform:none !important} }
 @media (prefers-reduced-motion:reduce){
   .rv{opacity:1;transform:none;transition:none}
   html{scroll-behavior:auto}
@@ -452,6 +455,7 @@ footer .sp{margin-left:auto}
 </style>
 </head>
 <body>
+<noscript><style>.rv{opacity:1 !important;transform:none !important}</style></noscript>
 
 <div class="readbar"><i id="readFill"></i></div>
 
