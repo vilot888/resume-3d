@@ -909,6 +909,10 @@ footer .mono{font-family:var(--mono);font-size:.76rem}
 
 </div>
 
+<!-- model-viewer（@google/model-viewer 3.5.0 本地副本，Apache-2.0）
+     必须是 module：该构建文件是 ES module 打包产物。没有任何 CDN 依赖。 -->
+<script type="module" src="assets/model-viewer.min.js"></script>
+
 <!-- ============================ 页面脚本 ============================ -->
 <script>
 (function () {
@@ -1067,6 +1071,8 @@ footer .mono{font-family:var(--mono);font-size:.76rem}
     var d = ev.data;
     if (!d || d.source !== 'splat' || current !== 'b') return;
     if (d.type === 'progress') {
+      // 数据就绪后，渲染循环还会继续回报进度；不能再让进度条把加载遮罩拉回来
+      if (splatLoaded) return;
       setOverlay(true, '正在加载高斯喷溅点云…', d.value);
     } else if (d.type === 'ready') {
       splatLoaded = true;
