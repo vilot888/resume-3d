@@ -1052,15 +1052,21 @@ footer .mono{font-family:var(--mono);font-size:.76rem}
 
   /* ---- 高斯喷溅 ---- */
   var splatTimer = null;
+  /* 与模型侧同一个思路：只要还有进度回报就把看门狗往后推。
+     12.8 MB 的 .splat 在慢网络（或 CDN 做了压缩传输）下很容易超过固定阈值，
+     固定超时会把"还在正常下载"误判成加载失败。 */
+  function armSplatWatchdog(ms) {
+    clearTimeout(splatTimer);
+    splatTimer = setTimeout(function () {
+      if (!splatLoaded && current === 'b') { degrade('喷溅数据在预期时间内没有进展'); }
+    }, ms);
+  }
   function loadSplat() {
     if (!webgl2) { degrade('WebGL2 不可用，喷溅渲染需要 WebGL2'); return; }
     splatLoaded = false;
     setOverlay(true, lowSpec ? '正在加载低配喷溅…' : '正在加载高斯喷溅点云…', 0);
     frame.src = 'assets/splat.html?q=' + (lowSpec ? 'low' : 'high');
-    clearTimeout(splatTimer);
-    splatTimer = setTimeout(function () {
-      if (!splatLoaded && current === 'b') { degrade('喷溅数据在预期时间内没有完成加载'); }
-    }, 45000);
+    armSplatWatchdog(45000);
   }
   function unloadSplat() {
     clearTimeout(splatTimer);
@@ -1074,8 +1080,10 @@ footer .mono{font-family:var(--mono);font-size:.76rem}
       // 数据就绪后，渲染循环还会继续回报进度；不能再让进度条把加载遮罩拉回来
       if (splatLoaded) return;
       setOverlay(true, '正在加载高斯喷溅点云…', d.value);
+      armSplatWatchdog(45000);
     } else if (d.type === 'ready') {
       splatLoaded = true;
+      clearTimeout(splatTimer);
       setOverlay(false);
     } else if (d.type === 'error') {
       degrade(d.message);
