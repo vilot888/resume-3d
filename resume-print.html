@@ -321,14 +321,15 @@
 
   <h2><span class="cn">3D 展区（静态）</span>3D Showcase</h2>
   <div class="snap">
-    <img src="assets/model-preview.jpg" alt="程序化生成的多层古塔模型（静态渲染）" />
+    <img src="assets/model-preview.jpg" alt="珠海渔女雕像的摄影测量扫描件（静态渲染）" />
     <div class="txt">
-      <b>多层古塔 · 程序化建模 + 网格转喷溅。</b><br />
-      模型由 Python（trimesh + numpy）以基本几何体拼装，约 1,800 面，导出 <b>model.glb</b>；
-      在模型表面均匀采样约 <b>40 万个点</b>得到 <b>scene.splat</b>（32 字节/点）。
-      <br /><br />
-      可拖拽旋转的交互版、以及高斯喷溅点云渲染，见线上页面 <b>index.html</b> 的「3D 展区」。
-      上述资源与渲染库全部同源存放，无任何 CDN 依赖。
+      <b>珠海渔女 · 真实摄影测量扫描。</b><br />
+      模型不是手工建的，而是 Agisoft PhotoScan 用照片重建的真实扫描件（原始 590,079 面 + 4K 照片贴图，
+      CC BY 4.0，作者 一升VR）。站点把照片贴图烘焙进顶点色后减面到 15 万面，
+      因此文件不到 5 MB 且不带贴图，观感仍是照片级。<br /><br />
+      点云档位是从同一份扫描件表面采样 20 万个点得到的，颜色直接来自照片贴图。
+      可拖拽旋转的交互版见线上页面 <b>index.html</b> 的「3D 展区」；
+      所有资源同源存放，无任何 CDN 依赖。
     </div>
   </div>
 

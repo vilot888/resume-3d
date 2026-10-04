@@ -245,12 +245,23 @@ cp scene.splat resume-3d/assets/scene.splat     # 覆盖同名文件即可
 
 ## 六、当前 B 档数据是怎么生成的（对照用）
 
-工作区里的 `tools/build_assets.py` 做了三件事，可以拿来和上面的真实流程对照：
+现在站点用的 **已经是真实照片重建的扫描件**，不是手工建模：
 
-1. `trimesh` + `numpy` 拼出古塔网格 → `assets/model.glb`
-2. 按面积加权在网格表面采样 **400,000** 个点，取面颜色、沿法线方向压扁
-   （切向 0.0435、法向 0.0161，切向/法向 ≈ 2.9），写出 `assets/scene.splat`（12.8 MB）
-3. 自己写的软件光栅化渲染器输出 `assets/model-preview.jpg`，作为 3D 加载失败时的降级图
+- 原始数据：Agisoft PhotoScan 照片重建的珠海渔女，**590,079 面 + 4096² 照片贴图**
+- 来源与许可：Sketchfab「珠海渔女」，作者 一升VR（sketchfab.com/laisenglee32），**CC BY 4.0**
 
-换成真实重建后，第 2 步的产物被替换掉，第 1、3 步可以保留，也可以一起换成
-用重建模型的网格重新导出的 `.glb`。
+工作区里的 `tools/from_scan.py` 做了这些事：
+
+1. **把 4K 照片贴图烘焙成逐顶点色** —— 363,036 个顶点各自从贴图里取一次真实像素色
+2. **丢掉贴图**，二次误差边坍缩减面到 150,000 面，用体素哈希把顶点色搬到新顶点
+   （减面会**移动**顶点，靠坐标精确匹配对不上：实测 15 万新顶点里有 9.9 万个是新位置）
+3. **补石材材质** `metallic 0 / roughness 0.82` —— 不补的话 glTF 默认 `metallicFactor = 1.0`，
+   石头会被渲染成抛光金属、颜色被高光冲淡
+4. 摆正坐标（Agisoft 的 Z-up → glTF 的 Y-up），水平居中且底面落在 `y = 0`
+5. 在这份网格表面按面积加权采样 **200,000** 个点，颜色直接取自照片贴图，
+   写出 `assets/scene.splat`（6.1 MB）
+6. `tools/make_hdr.py` 程序化生成三点光 HDR 环境；`tools/capture-preview.mjs` +
+   `tools/finish_preview.py` 从 WebGL 画布取真实渲染帧，合成电影感的 `assets/model-preview.jpg`
+
+**所以现在的差距只剩一项**：B 档的颜色是真实照片色，但外观模型是「一个点一个颜色」，
+没有 3DGS 那种随视角变化的高光与半透明。要拿到那部分，只能按第一到第四节走一遍真·3DGS 重建。
