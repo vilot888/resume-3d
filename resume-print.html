@@ -6,41 +6,19 @@
 <title>郭伟涛｜简历（打印 / PDF 版）</title>
 <style>
   :root{
-    --ink:#12161b;
-    --ink-2:#3d4652;
-    --ink-3:#6d7784;
-    --line:#d8dee6;
-    --line-2:#eaeef3;
-    --accent:#0f6b52;
-    --accent-2:#1f5fa8;
+    --ink:#12161b; --ink-2:#3d4652; --ink-3:#6d7784;
+    --line:#d8dee6; --line-2:#eaeef3;
+    --accent:#0f6b52; --accent-2:#1f5fa8;
     --mono:"JetBrains Mono","Cascadia Code",ui-monospace,Consolas,monospace;
     --ui:"PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;
   }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  body{
-    background:#f2f4f7;color:var(--ink);font-family:var(--ui);
-    font-size:14px;line-height:1.62;-webkit-font-smoothing:antialiased;
-    padding:22px 16px 40px;
-  }
-  .toolbar{
-    max-width:820px;margin:0 auto 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;
-    font-size:12.5px;color:var(--ink-3);
-  }
-  .toolbar a{
-    color:var(--accent-2);text-decoration:none;border:1px solid var(--line);
-    background:#fff;padding:6px 12px;border-radius:8px;
-  }
-  .toolbar a:hover{border-color:var(--accent-2)}
+  body{background:#f2f4f7;color:var(--ink);font-family:var(--ui);font-size:14px;line-height:1.62;padding:22px 16px 40px;-webkit-font-smoothing:antialiased}
+  .toolbar{max-width:820px;margin:0 auto 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:12.5px;color:var(--ink-3)}
+  .toolbar a{color:var(--accent-2);text-decoration:none;border:1px solid var(--line);background:#fff;padding:6px 12px;border-radius:8px}
   .toolbar a.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
   .toolbar .sp{margin-left:auto}
-
-  .sheet{
-    max-width:820px;margin:0 auto;background:#fff;
-    border:1px solid var(--line);border-radius:12px;
-    padding:38px 44px 42px;
-    box-shadow:0 10px 30px -22px rgba(15,23,42,.4);
-  }
-
+  .sheet{max-width:820px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:12px;padding:38px 44px 42px;box-shadow:0 10px 30px -22px rgba(15,23,42,.4)}
   header.hd{border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:18px}
   .nm{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
   h1{font-size:27px;letter-spacing:-.01em;line-height:1.1}
@@ -48,29 +26,18 @@
   .sub{margin-top:8px;font-size:13px;color:var(--ink-2);display:flex;gap:8px 22px;flex-wrap:wrap}
   .sub b{color:var(--ink);font-weight:600}
   .stack{font-family:var(--mono);font-size:12.5px}
-
-  h2{
-    font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
-    margin:20px 0 9px;padding-bottom:5px;border-bottom:1px solid var(--line-2);
-  }
+  h2{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:20px 0 9px;padding-bottom:5px;border-bottom:1px solid var(--line-2)}
   h2 .cn{letter-spacing:.02em;text-transform:none;font-size:14px;color:var(--ink);font-weight:700;margin-right:8px}
-
   .two{display:grid;grid-template-columns:1fr 1fr;gap:6px 30px}
   @media (max-width:640px){ .two{grid-template-columns:1fr} }
-
   .skill{margin-bottom:9px;break-inside:avoid}
   .skill .t{font-size:13px;font-weight:700;margin-bottom:3px}
   .skill ul{list-style:none}
-  .skill li{
-    display:flex;justify-content:space-between;gap:10px;
-    font-size:12.5px;color:var(--ink-2);
-    padding:1.5px 0;border-bottom:1px dotted var(--line);
-  }
+  .skill li{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;color:var(--ink-2);padding:1.5px 0;border-bottom:1px dotted var(--line)}
   .skill li:last-child{border-bottom:0}
   .skill li span:last-child{font-family:var(--mono);font-size:11.5px;color:var(--accent);flex:none}
   .skill li span.lo{color:var(--ink-3)}
-
-  .proj{margin-bottom:13px;break-inside:avoid}
+  .proj{margin-bottom:14px;break-inside:avoid}
   .proj .r1{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
   .proj h3{font-size:14px;font-weight:700}
   .proj .tech{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);flex:none}
@@ -79,54 +46,36 @@
   .proj li{position:relative;font-size:12.8px;color:var(--ink-2);padding:1.5px 0 1.5px 14px}
   .proj li::before{content:"";position:absolute;left:2px;top:9px;width:4px;height:4px;border-radius:50%;background:var(--accent)}
   .proj li b{color:var(--ink);font-weight:600}
-
+  .proj .win{font-size:12.3px;color:var(--ink-3);margin-top:3px}
+  .proj .win b{color:var(--accent);font-weight:600}
   .kv{display:flex;justify-content:space-between;gap:14px;font-size:12.8px;padding:2.5px 0;border-bottom:1px dotted var(--line)}
   .kv:last-child{border-bottom:0}
   .kv .k{color:var(--ink-3)}
   .kv .v{font-weight:600;text-align:right}
-
   .edu b{font-size:14px}
   .edu .m{font-size:12.8px;color:var(--ink-2)}
   .edu .t{font-family:var(--mono);font-size:12px;color:var(--accent);display:block;margin-top:2px}
-
   .timeline{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:12.8px}
   .timeline .tt{font-family:var(--mono);font-size:11.5px;color:var(--accent);padding-top:2px}
   .timeline .tb{color:var(--ink-2)}
   .timeline .tb b{color:var(--ink)}
-
   .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
   .tag{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);border:1px solid var(--line);border-radius:6px;padding:2px 8px;background:#fafbfc}
-
-  .snap{margin-top:6px;display:flex;gap:14px;align-items:center;break-inside:avoid}
-  .snap img{width:190px;border:1px solid var(--line);border-radius:8px}
-  .snap .txt{font-size:12.2px;color:var(--ink-3);line-height:1.6}
-  .snap .txt b{color:var(--ink-2)}
-  .photo-ph{
-    width:110px;height:147px;border:1px dashed var(--line);border-radius:8px;
-    display:flex;align-items:center;justify-content:center;
-    font-size:11.5px;color:var(--ink-3);text-align:center;flex:none;background:#fafbfc;
-  }
-
-  footer.ft{
-    margin-top:22px;padding-top:10px;border-top:1px solid var(--line-2);
-    display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
-    font-size:11.5px;color:var(--ink-3);
-  }
+  .play{display:flex;gap:14px;align-items:flex-start;break-inside:avoid}
+  .play .ph{width:120px;height:74px;flex:none;border:1px solid var(--line);border-radius:8px;background:#fafbfc;display:grid;place-items:center;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);text-align:center;line-height:1.5}
+  .play .txt{font-size:12.6px;color:var(--ink-2);line-height:1.68}
+  .play .txt b{color:var(--ink)}
+  .play .txt .g{display:block;margin-bottom:5px}
+  footer.ft{margin-top:22px;padding-top:10px;border-top:1px solid var(--line-2);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:11.5px;color:var(--ink-3)}
   footer.ft .mono{font-family:var(--mono)}
-
-  /* ---------------- 打印 ---------------- */
-  @page{ size:A4; margin:12mm 12mm 12mm 12mm; }
+  @page{ size:A4; margin:12mm; }
   @media print{
     body{background:#fff;padding:0;font-size:12px}
     .toolbar{display:none !important}
-    .sheet{
-      max-width:none;border:0;border-radius:0;box-shadow:none;
-      padding:0;background:#fff;
-    }
+    .sheet{max-width:none;border:0;border-radius:0;box-shadow:none;padding:0;background:#fff}
     h2{margin:14px 0 7px}
     .proj{margin-bottom:10px}
     a{color:inherit;text-decoration:none}
-    .snap img{width:165px}
   }
 </style>
 </head>
@@ -134,8 +83,8 @@
 
 <div class="toolbar">
   <a class="primary" href="javascript:window.print()">打印 / 另存为 PDF</a>
-  <a href="index.html">← 返回线上交互版（含 3D）</a>
-  <span class="sp">用浏览器「打印 → 目标：另存为 PDF，纸张 A4，边距默认」即可导出</span>
+  <a href="index.html">← 返回线上版（含两个小游戏）</a>
+  <span class="sp">浏览器「打印 → 目标：另存为 PDF，纸张 A4，边距默认」即可导出</span>
 </div>
 
 <div class="sheet">
@@ -147,13 +96,13 @@
     </div>
     <div class="sub">
       <span><b>专业</b> 人工智能技术应用</span>
-      <span><b>技术栈</b> <span class="stack">Python / Java / C++</span></span>
+      <span><b>技术栈</b> <span class="stack">Python / Java</span></span>
       <span><b>定位</b> 能写前端界面，也能把后端与算法活儿接上</span>
     </div>
     <div class="tags">
-      <span class="tag">Python</span><span class="tag">Java</span><span class="tag">C++</span>
-      <span class="tag">AI 应用</span><span class="tag">数据处理</span><span class="tag">工程落地</span>
-      <span class="tag">界面实现</span><span class="tag">WebGL / 3D</span>
+      <span class="tag">Python</span><span class="tag">Java</span><span class="tag">AI 应用</span>
+      <span class="tag">数据处理</span><span class="tag">工程落地</span><span class="tag">界面实现</span>
+      <span class="tag">Canvas 可视化</span>
     </div>
   </header>
 
@@ -165,7 +114,7 @@
       <div class="kv"><span class="k">主方向</span><span class="v">AI 应用开发与工程落地</span></div>
     </div>
     <div>
-      <div class="kv"><span class="k">技术栈</span><span class="v">Python / Java / C++</span></div>
+      <div class="kv"><span class="k">技术栈</span><span class="v">Python / Java</span></div>
       <div class="kv"><span class="k">定位</span><span class="v">能写界面，也能搭后端与算法</span></div>
       <div class="kv"><span class="k">照片</span><span class="v">（预留位置）</span></div>
     </div>
@@ -199,21 +148,21 @@
       </ul>
     </div>
     <div class="skill">
-      <div class="t">C++</div>
-      <ul>
-        <li><span>基础程序开发</span><span>熟练</span></li>
-        <li><span>内存 / 指针理解</span><span class="lo">了解</span></li>
-        <li><span>性能敏感逻辑</span><span class="lo">了解</span></li>
-        <li><span>算法实现辅助</span><span class="lo">了解</span></li>
-      </ul>
-    </div>
-    <div class="skill">
       <div class="t">AI 应用</div>
       <ul>
         <li><span>模型能力理解</span><span>熟练</span></li>
-        <li><span>调用与集成</span><span class="lo">了解</span></li>
         <li><span>数据流程设计</span><span>熟练</span></li>
         <li><span>工程落地思路</span><span>熟练</span></li>
+        <li><span>调用与集成</span><span class="lo">了解</span></li>
+      </ul>
+    </div>
+    <div class="skill">
+      <div class="t">其他</div>
+      <ul>
+        <li><span>界面实现</span><span class="lo">了解</span></li>
+        <li><span>数据可视化</span><span class="lo">了解</span></li>
+        <li><span>算法辅助</span><span class="lo">了解</span></li>
+        <li><span>模型集成</span><span class="lo">了解</span></li>
       </ul>
     </div>
   </div>
@@ -221,58 +170,52 @@
   <h2><span class="cn">项目经历</span>Projects</h2>
 
   <div class="proj">
-    <div class="r1"><h3>Python 数据处理与 AI 辅助系统</h3><span class="tech">Python · 数据处理</span></div>
-    <p class="desc">把来源不一、格式不齐的数据整理成可复用结构，重点在清洗规则、异常拦截和可重复执行的流程。</p>
+    <div class="r1"><h3>实验数据批处理与报告自动生成工具</h3><span class="tech">Python · pandas · python-docx</span></div>
+    <p class="desc">Python 命令行工具，把仪器导出的多份原始记录整理成规范报告。</p>
     <ul>
-      <li><b>统一 CSV / Excel / JSON 多源输入</b>到同一字段模型，落库前先过校验层，字段缺失与类型冲突在下游报错之前就被拦下</li>
-      <li>把清洗规则抽成配置项，新增数据源只改配置、不动主流程；异常样本单独落盘并记录原因，便于回溯</li>
-      <li>将重复的核对与汇总任务脚本化，按需一键重跑，替代人工反复整理</li>
-      <li>流程内置去重、范围校验与空值策略，<b>输出结果可直接进入后续分析</b></li>
+      <li><b>多源汇总</b>：自动识别表头位置并统一字段名，仪器导出格式变了只改配置、不改代码</li>
+      <li><b>规则外置</b>：清洗与计算规则写在 YAML（去重、量程校验、缺失值策略、公式）</li>
+      <li><b>大文件不炸内存</b>：pandas 分块读取，几百 MB 日志也能跑完</li>
+      <li><b>报告自动化</b>：python-docx 填充 Word 模板，一次运行输出全部数据表 + 图表 + 结论页</li>
+      <li><b>异常可追溯</b>：被剔除的样本单独落盘并记录原因</li>
     </ul>
+    <p class="win"><b>结果</b>　原来一份报告要反复复制粘贴很久，现在一条命令跑完。</p>
   </div>
 
   <div class="proj">
-    <div class="r1"><h3>Java 业务模块开发</h3><span class="tech">Java · 面向对象</span></div>
-    <p class="desc">承担业务模块的设计与实现，关注职责拆分、接口组织和后续可维护性。</p>
+    <div class="r1"><h3>校园图书借阅管理系统</h3><span class="tech">Java · JDBC · MySQL</span></div>
+    <p class="desc">Java 课程设计，面向图书馆日常借还的业务系统。</p>
     <ul>
-      <li><b>按职责划分包与模块</b>，公共能力下沉为可复用组件，避免业务判断都堆在入口层</li>
-      <li>梳理核心数据流转与状态变更路径，把散落在各处的判断收敛到明确的状态处理位置</li>
-      <li>接口先行地建模业务实体与行为，方便替换实现、单独测试</li>
-      <li>对常见故障形成固定排查顺序（日志定位 → 入参校验 → 数据状态核对），不只停在"功能能跑"</li>
+      <li><b>分层拆分</b>：Controller / Service / DAO 各管一段，SQL 只在 DAO，业务判断集中在 Service</li>
+      <li><b>借阅状态机</b>：在馆 → 借出 → 逾期 → 归还，非法迁移直接抛异常</li>
+      <li><b>并发下不超借</b>：数据库唯一约束 + 事务兜住，而不是只靠界面判断</li>
+      <li><b>逾期计算</b>：当天归还、跨月、续借等边界都有单独用例</li>
+      <li><b>可测试</b>：核心借还逻辑抽成不依赖数据库的纯方法，能直接写单测</li>
     </ul>
+    <p class="win"><b>结果</b>　散落在界面事件里的判断收敛到 Service，改一处全站生效。</p>
   </div>
 
   <div class="proj">
-    <div class="r1"><h3>C++ 基础程序与算法实现</h3><span class="tech">C++ · 算法</span></div>
-    <p class="desc">用 C++ 完成基础程序与算法实现，先保证正确性，再关注资源使用与结构清晰。</p>
+    <div class="r1"><h3>课堂行为识别的轻量迁移学习实践</h3><span class="tech">Python · PyTorch · ONNX · OpenCV</span></div>
+    <p class="desc">AI 应用实践，用普通摄像头做举手 / 低头识别与统计。</p>
     <ul>
-      <li><b>独立完成基础开发任务</b>，先覆盖边界条件，再谈实现方式</li>
-      <li>理解指针、引用与对象生命周期，主动规避悬空指针、数组越界与资源未释放</li>
-      <li>在规模可控的场景做过实现层面的优化（减少重复遍历、避免无谓拷贝）</li>
-      <li>能把算法思路翻译成可运行代码，并配最小可复现用例自检</li>
+      <li><b>小样本起步</b>：公开数据集预训练 + 自标注课堂截图做迁移学习</li>
+      <li><b>数据增强</b>：随机裁剪、亮度扰动、水平翻转，缓解标注少与光照差异</li>
+      <li><b>导出 ONNX 落地</b>：用 OpenCV DNN 推理，不依赖训练环境也能部署</li>
+      <li><b>时序平滑</b>：单帧结果用滑动窗口投票，避免手晃一下被误判成举手</li>
+      <li><b>置信度兜底</b>：低置信度不硬判，标成「不确定」交给规则处理</li>
     </ul>
+    <p class="win"><b>收获</b>　把 AI 需求拆成「模型能不能解」和「工程怎么接」两层分别评估。</p>
   </div>
 
-  <div class="proj">
-    <div class="r1"><h3>人工智能技术应用探索项目</h3><span class="tech">Python · AI 应用</span></div>
-    <p class="desc">围绕「模型能解什么、工程怎么接」做的落地探索。</p>
-    <ul>
-      <li><b>梳理模型的能力边界与典型失败模式</b>，明确哪些环节该交给模型、哪些该由规则与人工兜底</li>
-      <li>用 Python 完成调用侧封装：入参组织、超时重试、返回结构解析</li>
-      <li>对模型输出做结构化校验与兜底（格式校验、缺字段处理、失败重试），避免脏结果流入业务</li>
-      <li>把 AI 需求拆成<b>「模型能不能解」和「工程怎么接」</b>两层分别评估，再决定技术方案</li>
-    </ul>
-  </div>
-
-  <div class="proj">
-    <div class="r1"><h3>综合开发与应用实践</h3><span class="tech">Python · Java · C++</span></div>
-    <p class="desc">在同一批任务里组合多种语言与方向，按场景选型。</p>
-    <ul>
-      <li><b>Python 负责快速实现、数据处理与脚本工具</b>，缩短验证想法的时间</li>
-      <li><b>Java 负责偏业务、需要结构化的部分</b>，便于长期维护与扩展</li>
-      <li><b>C++ 负责对性能或底层理解要求更高的部分</b></li>
-      <li>按场景在三种语言之间切换，不把一种思路套到所有问题上</li>
-    </ul>
+  <h2><span class="cn">作品：两个手写小游戏</span>Playable</h2>
+  <div class="play">
+    <div class="ph">原生 CANVAS<br />零依赖<br />点开即玩</div>
+    <div class="txt">
+      <span class="g"><b>引力弹弓</b> —— 拖拽发射探测器，靠恒星引力弯折航线，按顺序穿过光环再飞进终点。自己写的引力积分与预测轨迹，4 个关卡。</span>
+      <span class="g"><b>梯度下降大冒险</b> —— 在看不见深浅的损失曲面上当一回优化器：学习率调大飞出去、调小走不到底，还得判断自己是不是掉进了局部最优。带迷雾探索与 loss 曲线。</span>
+      <span>两个游戏都是原生 Canvas + 原生 JS 手写，无游戏引擎、无第三方库。线上版 <b>index.html</b> 的「游戏实验室」可直接玩。</span>
+    </div>
   </div>
 
   <h2><span class="cn">能力标签</span>Capability</h2>
@@ -282,7 +225,7 @@
       <ul>
         <li><span>Python 工程</span><span>熟练</span></li>
         <li><span>Java 业务</span><span>熟练</span></li>
-        <li><span>C++ 基础</span><span class="lo">了解</span></li>
+        <li><span>界面实现</span><span class="lo">了解</span></li>
       </ul>
     </div>
     <div class="skill">
@@ -304,7 +247,7 @@
     <div class="skill">
       <div class="t">扩展</div>
       <ul>
-        <li><span>界面实现</span><span class="lo">了解</span></li>
+        <li><span>数据可视化</span><span class="lo">了解</span></li>
         <li><span>算法辅助</span><span class="lo">了解</span></li>
         <li><span>模型集成</span><span class="lo">了解</span></li>
       </ul>
@@ -315,22 +258,8 @@
   <div class="timeline">
     <span class="tt">在学</span><span class="tb"><b>工程化思维</b>　在真实开发里持续练</span>
     <span class="tt">在练</span><span class="tb"><b>Python / Java</b>　常用语言保持熟练</span>
-    <span class="tt">在补</span><span class="tb"><b>C++ 与底层理解</b>　边用边打基础</span>
+    <span class="tt">在补</span><span class="tb"><b>数据结构与算法</b>　边刷边用到项目里</span>
     <span class="tt">在看</span><span class="tb"><b>AI 技术应用</b>　怎么更实地落地</span>
-  </div>
-
-  <h2><span class="cn">3D 展区（静态）</span>3D Showcase</h2>
-  <div class="snap">
-    <img src="assets/model-preview.jpg" alt="珠海渔女雕像的摄影测量扫描件（静态渲染）" />
-    <div class="txt">
-      <b>珠海渔女 · 真实摄影测量扫描。</b><br />
-      模型不是手工建的，而是 Agisoft PhotoScan 用照片重建的真实扫描件（原始 590,079 面 + 4K 照片贴图，
-      CC BY 4.0，作者 一升VR）。站点把照片贴图烘焙进顶点色后减面到 15 万面，
-      因此文件不到 5 MB 且不带贴图，观感仍是照片级。<br /><br />
-      点云档位是从同一份扫描件表面采样 20 万个点得到的，颜色直接来自照片贴图。
-      可拖拽旋转的交互版见线上页面 <b>index.html</b> 的「3D 展区」；
-      所有资源同源存放，无任何 CDN 依赖。
-    </div>
   </div>
 
   <h2><span class="cn">特点</span>Traits</h2>
@@ -347,7 +276,7 @@
 
   <footer class="ft">
     <div>郭伟涛 · 人工智能技术应用</div>
-    <div class="mono">Python · Java · C++ · AI 应用与工程落地</div>
+    <div class="mono">Python · Java · AI 应用与工程落地</div>
   </footer>
 
 </div>
