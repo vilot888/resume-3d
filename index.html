@@ -925,7 +925,7 @@ footer .sp{margin-left:auto}
 
     var li = 0, lv = null, probe = null, trail = [], parts = [], status = 'idle';
     var tries = 0, aiming = false, aimStart = null, aimNow = null, preview = [], previewWin = false;
-    var flightSteps = 0;
+    var flightSteps = 0, lastPvx = 0, lastPvy = 0;
     var msg = '', msgT = 0, raf = 0, onScr = true, docVis = !document.hidden;
 
     try { var b = localStorage.getItem('gt-ss-best'); if (b) elBest.textContent = b; } catch (e) {}
@@ -1182,6 +1182,7 @@ footer .sp{margin-left:auto}
       preview = simulate(probe.x, probe.y, vx, vy, PREVIEW_SECONDS);
       // 关键的手感设计：预测轨迹同时把这发能不能通关算出来，
       // 能通关就把虚线画成金色并给出提示。否则玩家是在盲瞄一个很窄的解。
+      lastPvx = vx; lastPvy = vy;
       previewWin = trial(li, vx, vy).won;
     }
     cv.addEventListener('pointerdown', function (e) {
@@ -1231,7 +1232,10 @@ footer .sp{margin-left:auto}
           probe: probe ? { x: probe.x, y: probe.y } : null,
           gatesPassed: lv.gates.filter(function (g) { return g.passed; }).length,
           gateCount: lv.gates.length,
-          aiming: aiming, previewWin: previewWin, previewLen: preview.length
+          aiming: aiming, previewWin: previewWin, previewLen: preview.length,
+          previewVx: lastPvx, previewVy: lastPvy,
+          aimStart: aimStart ? { x: aimStart.x, y: aimStart.y } : null,
+          aimNow: aimNow ? { x: aimNow.x, y: aimNow.y } : null
         };
       },
       levels: function () { return LEVELS.map(function (l) { return l.name; }); },
