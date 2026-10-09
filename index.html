@@ -1050,11 +1050,15 @@ footer .sp{margin-left:auto}
       var acc = cssVar('--accent', '#7ff0c0');
       var acc2 = cssVar('--accent-2', '#7db4ff');
       ctx.clearRect(0, 0, W, H);
-      for (var i = 0; i < 90; i++) {
-        var sx = (i * 137.508) % W, sy = (i * 91.7) % H;
-        ctx.globalAlpha = .05 + ((i * 37) % 10) / 60;
+      // 星野：用哈希散开。原先的 i*137.508 % W 点阵会连成一条弧线，
+      // 在一个"看轨迹"的游戏里会被误认成一条弹道，所以必须打散。
+      for (var i = 0; i < 120; i++) {
+        var s1 = Math.sin(i * 127.1 + 311.7) * 43758.5453; s1 -= Math.floor(s1);
+        var s2 = Math.sin(i * 269.5 + 183.3) * 43758.5453; s2 -= Math.floor(s2);
+        var s3 = Math.sin(i * 419.2 + 371.9) * 43758.5453; s3 -= Math.floor(s3);
+        ctx.globalAlpha = .04 + s3 * .17;
         ctx.fillStyle = '#ffffff';
-        ctx.fillRect(sx, sy, 1.4, 1.4);
+        ctx.fillRect(s1 * W, s2 * H, 1.1 + s3 * .9, 1.1 + s3 * .9);
       }
       ctx.globalAlpha = 1;
       for (var s = 0; s < lv.stars.length; s++) {
