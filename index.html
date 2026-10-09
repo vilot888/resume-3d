@@ -964,13 +964,16 @@ footer .sp{margin-left:auto}
     }
     function substep(p, n) { substepL(lv, p, n); }
 
-    /* 纯函数试射：不碰任何界面状态，供离线求解与自动化验证使用 */
+    /* 纯函数试射：不碰任何界面状态，供离线求解与自动化验证使用。
+       步数上限必须和游戏里的失联看门狗一致，否则预测会和实际结果对不上
+       （慢速借力弹道要飞很久，上限太小会被误判成"不能通关"）。 */
+    var TRIAL_MAX_STEPS = 7200;      // 7200 × 1/240 s = 30 秒
     function trial(i, vx, vy) {
       var L = LEVELS[i];
       var p = { x: L.pad.x, y: L.pad.y, vx: vx, vy: vy };
       var passed = L.gates.map(function () { return false; });
       var lost = false, won = false, st = 0;
-      for (; st < 3600; st++) {
+      for (; st < TRIAL_MAX_STEPS; st++) {
         substepL(L, p, 1);
         for (var k = 0; k < L.stars.length; k++) {
           if (Math.hypot(p.x - L.stars[k].x, p.y - L.stars[k].y) < STAR_R) { lost = true; break; }
@@ -1035,7 +1038,12 @@ footer .sp{margin-left:auto}
        不会因为加速而从光环里穿过去。 */
     function step() {
       var mult = flightSteps > 180 ? 3 : 1;
-      for (var k = 0; k < mult && status === 'flying'; k++) { microStep(); flightSteps++; }
+      for (var k = 0; k < mult && status === 'flying'; k++) {
+        // 看门狗：超过 1800 个微步（= 7200 子步 = 30 秒）判为失联。
+        // 必须和 trial() 的上限一致，否则会出现"预测说不行、实际却赢了"。
+        if (flightSteps > 1800) { status = 'lose'; msg = '飞太久了'; msgT = 90; return; }
+        microStep(); flightSteps++;
+      }
     }
     function draw() {
       var ink3 = cssVar('--ink-3', '#66748a');
