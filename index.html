@@ -355,10 +355,10 @@ footer .sp{margin-left:auto}
   <span class="mark" aria-hidden="true">GT</span>
   <nav aria-label="章节导航">
     <a href="#top" data-label="首页" aria-current="true"><i></i></a>
-    <a href="#arcade" data-label="游戏实验室"><i></i></a>
+    <a href="#edu" data-label="教育背景"><i></i></a>
+    <a href="#projects" data-label="项目经历"><i></i></a>
     <a href="#skills" data-label="技能"><i></i></a>
-    <a href="#projects" data-label="项目"><i></i></a>
-    <a href="#more" data-label="更多"><i></i></a>
+    <a href="#arcade" data-label="游戏实验室"><i></i></a>
   </nav>
   <span class="spacer"></span>
   <span class="vert" aria-hidden="true">RESUME 2026</span>
@@ -382,7 +382,7 @@ footer .sp{margin-left:auto}
     <canvas id="heroCanvas" aria-hidden="true"></canvas>
     <div class="wrap hero-inner">
       <p class="eyebrow rv"><s></s>Resume · 人工智能技术应用</p>
-      <h1 class="name rv">郭伟涛<span class="accent">.</span></h1>
+      <h1 class="name rv">郭伟涛</h1>
       <div class="roles rv" aria-live="polite">
         <span class="bar" aria-hidden="true"></span>
         <span id="roleText">AI 应用开发与工程落地</span><span class="cursor" aria-hidden="true"></span>
@@ -397,7 +397,6 @@ footer .sp{margin-left:auto}
         <div class="stat"><div class="n" data-count="3">0</div><div class="l">具体项目</div></div>
         <div class="stat"><div class="n" data-count="2">0</div><div class="l">手写小游戏</div></div>
         <div class="stat"><div class="n" data-count="0">0</div><div class="l">外部依赖</div></div>
-        <div class="stat"><div class="n"><em data-count="100">0</em>%</div><div class="l">代码自己写</div></div>
       </div>
     </div>
     <div class="wrap" style="position:absolute;left:50%;transform:translateX(-50%);bottom:0;right:0">
@@ -405,209 +404,13 @@ footer .sp{margin-left:auto}
     </div>
   </header>
 
-  <!-- ===================== 游戏实验室 ===================== -->
-  <section class="section" id="arcade">
+  <!-- ===================== Bento ===================== -->
+  <section class="section" id="edu">
     <div class="wrap">
       <div class="sechead rv">
         <span class="no">01</span>
-        <h2>游戏实验室</h2>
-        <p>两个用原生 Canvas 手写的小游戏。没有游戏引擎、没有第三方库，直接点开就能玩。</p>
-      </div>
-
-      <div class="arcade">
-
-        <article class="game rv" id="gameA">
-          <div class="game-head">
-            <h3><em>A</em>引力弹弓</h3>
-            <span class="tag">物理模拟 · 关卡解谜</span>
-            <span class="best">最高关卡 <b id="ssBest">—</b></span>
-          </div>
-          <div class="stage">
-            <canvas id="ssCanvas" aria-label="引力弹弓游戏画面"></canvas>
-            <div class="veil" id="ssVeil">
-              <h4>用引力把自己甩出去</h4>
-              <p>拖拽瞄准、松手发射。恒星的引力会弯折你的航线——<b>直线飞不过去，得借引力甩</b>。<br>
-                 按顺序穿过所有光环，再飞进终点。<b>虚线会一路算到底，能通关时会变成金色</b>，照着它调角度就行。</p>
-              <button class="btn" id="ssStart" type="button">开始游戏</button>
-            </div>
-          </div>
-          <div class="game-foot">
-            <div class="hud">
-              <span>关卡 <b id="ssLevel">1 / 4</b></span>
-              <span>光环 <b id="ssGates" class="hl">0 / 1</b></span>
-              <span>尝试 <b id="ssTries">0</b></span>
-            </div>
-            <span class="hint">操作：在画布上按住往反方向拖拽（像弹弓一样），虚线是<b>预测轨迹</b>，松手发射。<b>预测会一路算到底：能通关时虚线变金色并提示</b>。按 <b>R</b> 重来本关。</span>
-          </div>
-        </article>
-
-        <article class="game rv" id="gameB">
-          <div class="game-head">
-            <h3><em>B</em>梯度下降大冒险</h3>
-            <span class="tag">AI 主题 · 策略</span>
-            <span class="best">历史最优 loss <b id="gdBest">—</b></span>
-          </div>
-          <div class="stage">
-            <canvas id="gdCanvas" aria-label="梯度下降游戏画面"></canvas>
-            <div class="veil" id="gdVeil">
-              <h4>你是一个优化器</h4>
-              <p>在<b>看不见深浅</b>的损失曲面上，靠梯度下降滚到最低点。学习率调大了会飞出去，调小了走不到底。<br>
-                 先点画布选一个起点，再用 <kbd>↑</kbd> <kbd>↓</kbd> 或滑条实时调学习率。</p>
-              <button class="btn" id="gdStart" type="button">开始下降</button>
-            </div>
-          </div>
-          <div class="game-foot">
-            <div class="hud">
-              <span>步数 <b id="gdSteps">0 / 600</b></span>
-              <span>当前 loss <b id="gdLoss" class="hl">—</b></span>
-              <span>全局最优 <b id="gdGlobal">—</b></span>
-            </div>
-            <div class="lrwrap">
-              <span>学习率</span>
-              <input id="gdLr" type="range" min="0" max="1000" value="742" aria-label="学习率" />
-              <b id="gdLrVal">0.01</b>
-            </div>
-            <span class="hint">起点可点选；<b>↑/↓</b> 实时调学习率，<b>空格</b> 暂停，<b>R</b> 重开。曲面每跑一次只会揭开你走过的地方。</span>
-          </div>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== 技能 ===================== -->
-  <section class="section" id="skills">
-    <div class="wrap">
-      <div class="sechead rv">
-        <span class="no">02</span>
-        <h2>技能与能力</h2>
-        <p>评级沿用原简历口径：<b>熟练</b> 为能独立完成并交付，<b>了解</b> 为能读懂、能改、能用起来。</p>
-      </div>
-      <div class="skills-grid">
-        <article class="skill rv">
-          <span class="bgno" aria-hidden="true">Py</span>
-          <div class="hd"><h3>Python</h3><span class="tag">主力</span><span class="lvl">3 熟练 / 1 了解</span></div>
-          <ul>
-            <li class="pro"><span class="nm">工程与脚本开发</span><span class="pct">熟练 92%</span><span class="meter"><i data-lv="92"></i></span></li>
-            <li class="pro"><span class="nm">数据处理</span><span class="pct">熟练 90%</span><span class="meter"><i data-lv="90"></i></span></li>
-            <li class="pro"><span class="nm">工具链搭建</span><span class="pct">熟练 85%</span><span class="meter"><i data-lv="85"></i></span></li>
-            <li><span class="nm">服务与接口</span><span class="pct">了解 55%</span><span class="meter"><i data-lv="55"></i></span></li>
-          </ul>
-        </article>
-
-        <article class="skill rv">
-          <span class="bgno" aria-hidden="true">Jv</span>
-          <div class="hd"><h3>Java</h3><span class="tag">业务</span><span class="lvl">2 熟练 / 2 了解</span></div>
-          <ul>
-            <li class="pro"><span class="nm">业务模块开发</span><span class="pct">熟练 88%</span><span class="meter"><i data-lv="88"></i></span></li>
-            <li class="pro"><span class="nm">面向对象设计</span><span class="pct">熟练 86%</span><span class="meter"><i data-lv="86"></i></span></li>
-            <li><span class="nm">接口组织</span><span class="pct">了解 58%</span><span class="meter"><i data-lv="58"></i></span></li>
-            <li><span class="nm">并发 / 集合基础</span><span class="pct">了解 52%</span><span class="meter"><i data-lv="52"></i></span></li>
-          </ul>
-        </article>
-
-        <article class="skill rv">
-          <span class="bgno" aria-hidden="true">AI</span>
-          <div class="hd"><h3>AI 应用</h3><span class="tag">方向</span><span class="lvl">3 熟练 / 1 了解</span></div>
-          <ul>
-            <li class="pro"><span class="nm">模型能力理解</span><span class="pct">熟练 88%</span><span class="meter"><i data-lv="88"></i></span></li>
-            <li class="pro"><span class="nm">数据流程设计</span><span class="pct">熟练 84%</span><span class="meter"><i data-lv="84"></i></span></li>
-            <li class="pro"><span class="nm">工程落地思路</span><span class="pct">熟练 86%</span><span class="meter"><i data-lv="86"></i></span></li>
-            <li><span class="nm">调用与集成</span><span class="pct">了解 56%</span><span class="meter"><i data-lv="56"></i></span></li>
-          </ul>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== 项目 ===================== -->
-  <section class="section" id="projects">
-    <div class="wrap">
-      <div class="sechead rv">
-        <span class="no">03</span>
-        <h2>项目经历</h2>
-        <p>三个真正做过的方向：一个 Python 工具、一个 Java 系统、一个 AI 应用实践。</p>
-      </div>
-
-      <div class="projects">
-
-        <article class="proj rv">
-          <div class="top">
-            <span class="idx">01</span>
-            <div>
-              <h3>实验数据批处理与报告自动生成工具</h3>
-              <div class="sub">Python 命令行工具 · 把多份原始记录整理成规范报告</div>
-            </div>
-            <div class="stack"><span>Python</span><span>pandas</span><span>openpyxl</span><span>python-docx</span></div>
-          </div>
-          <div class="body">
-            <p>实验课每次都要从仪器导出的十几份 CSV / Excel 里手工挑数、算平均值与偏差、再复制粘贴进 Word 模板。我把这套流程写成了一个命令行工具。</p>
-            <ul>
-              <li><b>多源汇总</b>：自动识别表头位置并统一成同一套字段名，仪器导出格式变了也不用改代码，改配置就行</li>
-              <li><b>规则外置</b>：清洗与计算规则写在 YAML 里（去重、量程校验、缺失值策略、公式），换一门课只换配置</li>
-              <li><b>大文件不炸内存</b>：用 pandas 分块读取，几百 MB 的日志也能跑完</li>
-              <li><b>报告自动化</b>：用 python-docx 填充 Word 模板，一次运行输出全部数据表 + 图表 + 结论页</li>
-              <li><b>异常可追溯</b>：被剔除的样本单独落盘并记录原因，不用回去翻原始文件</li>
-            </ul>
-            <div class="win"><span class="k">结果</span><span>原来一份实验报告要反复复制粘贴很久，现在一条命令跑完；规则改动不再需要动代码。</span></div>
-          </div>
-        </article>
-
-        <article class="proj rv">
-          <div class="top">
-            <span class="idx">02</span>
-            <div>
-              <h3>校园图书借阅管理系统</h3>
-              <div class="sub">Java 课程设计 · 图书 / 读者 / 借还 / 逾期</div>
-            </div>
-            <div class="stack"><span>Java</span><span>JDBC</span><span>MySQL</span><span>分层架构</span></div>
-          </div>
-          <div class="body">
-            <p>面向图书馆日常借还的业务系统，重点不在界面，而在把借阅这件事的规则写对、写清楚。</p>
-            <ul>
-              <li><b>分层拆分</b>：Controller / Service / DAO 各管一段，SQL 只出现在 DAO，业务判断集中在 Service，出问题不用满项目找</li>
-              <li><b>借阅状态机</b>：在馆 → 借出 → 逾期 → 归还，状态迁移写成明确的方法，非法迁移直接抛异常而不是悄悄改数据</li>
-              <li><b>并发下不超借</b>：同一本书被两个人同时点借出时，用数据库唯一约束 + 事务兜住，而不是只靠界面上的判断</li>
-              <li><b>逾期计算</b>：按借期与归还日期算罚金，边界（当天归还、跨月、续借）都有单独用例</li>
-              <li><b>可测试</b>：核心借还逻辑抽成不依赖数据库的纯方法，能直接写单测跑</li>
-            </ul>
-            <div class="win"><span class="k">结果</span><span>把原来散落在界面事件里的判断收敛到 Service，逻辑改一处就能全站生效，也更敢改动。</span></div>
-          </div>
-        </article>
-
-        <article class="proj rv">
-          <div class="top">
-            <span class="idx">03</span>
-            <div>
-              <h3>课堂行为识别的轻量迁移学习实践</h3>
-              <div class="sub">AI 应用 · 用普通摄像头做举手 / 低头识别与统计</div>
-            </div>
-            <div class="stack"><span>Python</span><span>PyTorch</span><span>ONNX</span><span>OpenCV</span></div>
-          </div>
-          <div class="body">
-            <p>想让老师不用回头就能看到后排谁在举手。重点不是刷指标，而是走通「数据 → 训练 → 导出 → 在普通电脑上跑起来」这条链。</p>
-            <ul>
-              <li><b>小样本起步</b>：先用公开数据集预训练，再拿自己标注的课堂截图做迁移学习，避免从零训练</li>
-              <li><b>数据增强</b>：随机裁剪、亮度扰动、水平翻转，缓解标注量少和光照差异大的问题</li>
-              <li><b>导出 ONNX 落地</b>：训练完导出 ONNX，用 OpenCV DNN 推理，不依赖训练环境也能部署</li>
-              <li><b>时序平滑</b>：单帧结果用滑动窗口投票再输出，避免手晃一下就误判成举手</li>
-              <li><b>置信度兜底</b>：低置信度不硬判，标成「不确定」交给规则处理，而不是给个看起来确定的错答案</li>
-            </ul>
-            <div class="win"><span class="k">收获</span><span>把 AI 需求拆成「模型能不能解」和「工程怎么接」两层分别评估——很多坑其实在第二层。</span></div>
-          </div>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== Bento ===================== -->
-  <section class="section" id="more">
-    <div class="wrap">
-      <div class="sechead rv">
-        <span class="no">04</span>
         <h2>教育 · 能力 · 节奏</h2>
-        <p>把剩下的信息压进一张栅格，不用再翻页。</p>
+        <p>先把基本情况放前面：学校、专业、在读时间，以及能力标签和学习节奏。</p>
       </div>
 
       <div class="bento">
@@ -684,6 +487,202 @@ footer .sp{margin-left:auto}
       </div>
     </div>
   </section>
+  <!-- ===================== 项目 ===================== -->
+  <section class="section" id="projects">
+    <div class="wrap">
+      <div class="sechead rv">
+        <span class="no">02</span>
+        <h2>项目经历</h2>
+        <p>三个真正做过的方向：一个 Python 工具、一个 Java 系统、一个 AI 应用实践。</p>
+      </div>
+
+      <div class="projects">
+
+        <article class="proj rv">
+          <div class="top">
+            <span class="idx">01</span>
+            <div>
+              <h3>实验数据批处理与报告自动生成工具</h3>
+              <div class="sub">Python 命令行工具 · 把多份原始记录整理成规范报告</div>
+            </div>
+            <div class="stack"><span>Python</span><span>pandas</span><span>openpyxl</span><span>python-docx</span></div>
+          </div>
+          <div class="body">
+            <p>实验课每次都要从仪器导出的十几份 CSV / Excel 里手工挑数、算平均值与偏差、再复制粘贴进 Word 模板。我把这套流程写成了一个命令行工具。</p>
+            <ul>
+              <li><b>多源汇总</b>：自动识别表头位置并统一成同一套字段名，仪器导出格式变了也不用改代码，改配置就行</li>
+              <li><b>规则外置</b>：清洗与计算规则写在 YAML 里（去重、量程校验、缺失值策略、公式），换一门课只换配置</li>
+              <li><b>大文件不炸内存</b>：用 pandas 分块读取，几百 MB 的日志也能跑完</li>
+              <li><b>报告自动化</b>：用 python-docx 填充 Word 模板，一次运行输出全部数据表 + 图表 + 结论页</li>
+              <li><b>异常可追溯</b>：被剔除的样本单独落盘并记录原因，不用回去翻原始文件</li>
+            </ul>
+            <div class="win"><span class="k">结果</span><span>原来一份实验报告要反复复制粘贴很久，现在一条命令跑完；规则改动不再需要动代码。</span></div>
+          </div>
+        </article>
+
+        <article class="proj rv">
+          <div class="top">
+            <span class="idx">02</span>
+            <div>
+              <h3>校园图书借阅管理系统</h3>
+              <div class="sub">Java 课程设计 · 图书 / 读者 / 借还 / 逾期</div>
+            </div>
+            <div class="stack"><span>Java</span><span>JDBC</span><span>MySQL</span><span>分层架构</span></div>
+          </div>
+          <div class="body">
+            <p>面向图书馆日常借还的业务系统，重点不在界面，而在把借阅这件事的规则写对、写清楚。</p>
+            <ul>
+              <li><b>分层拆分</b>：Controller / Service / DAO 各管一段，SQL 只出现在 DAO，业务判断集中在 Service，出问题不用满项目找</li>
+              <li><b>借阅状态机</b>：在馆 → 借出 → 逾期 → 归还，状态迁移写成明确的方法，非法迁移直接抛异常而不是悄悄改数据</li>
+              <li><b>并发下不超借</b>：同一本书被两个人同时点借出时，用数据库唯一约束 + 事务兜住，而不是只靠界面上的判断</li>
+              <li><b>逾期计算</b>：按借期与归还日期算罚金，边界（当天归还、跨月、续借）都有单独用例</li>
+              <li><b>可测试</b>：核心借还逻辑抽成不依赖数据库的纯方法，能直接写单测跑</li>
+            </ul>
+            <div class="win"><span class="k">结果</span><span>把原来散落在界面事件里的判断收敛到 Service，逻辑改一处就能全站生效，也更敢改动。</span></div>
+          </div>
+        </article>
+
+        <article class="proj rv">
+          <div class="top">
+            <span class="idx">03</span>
+            <div>
+              <h3>课堂行为识别的轻量迁移学习实践</h3>
+              <div class="sub">AI 应用 · 用普通摄像头做举手 / 低头识别与统计</div>
+            </div>
+            <div class="stack"><span>Python</span><span>PyTorch</span><span>ONNX</span><span>OpenCV</span></div>
+          </div>
+          <div class="body">
+            <p>想让老师不用回头就能看到后排谁在举手。重点不是刷指标，而是走通「数据 → 训练 → 导出 → 在普通电脑上跑起来」这条链。</p>
+            <ul>
+              <li><b>小样本起步</b>：先用公开数据集预训练，再拿自己标注的课堂截图做迁移学习，避免从零训练</li>
+              <li><b>数据增强</b>：随机裁剪、亮度扰动、水平翻转，缓解标注量少和光照差异大的问题</li>
+              <li><b>导出 ONNX 落地</b>：训练完导出 ONNX，用 OpenCV DNN 推理，不依赖训练环境也能部署</li>
+              <li><b>时序平滑</b>：单帧结果用滑动窗口投票再输出，避免手晃一下就误判成举手</li>
+              <li><b>置信度兜底</b>：低置信度不硬判，标成「不确定」交给规则处理，而不是给个看起来确定的错答案</li>
+            </ul>
+            <div class="win"><span class="k">收获</span><span>把 AI 需求拆成「模型能不能解」和「工程怎么接」两层分别评估——很多坑其实在第二层。</span></div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+  <!-- ===================== 技能 ===================== -->
+  <section class="section" id="skills">
+    <div class="wrap">
+      <div class="sechead rv">
+        <span class="no">03</span>
+        <h2>技能与能力</h2>
+        <p>评级沿用原简历口径：<b>熟练</b> 为能独立完成并交付，<b>了解</b> 为能读懂、能改、能用起来。</p>
+      </div>
+      <div class="skills-grid">
+        <article class="skill rv">
+          <span class="bgno" aria-hidden="true">Py</span>
+          <div class="hd"><h3>Python</h3><span class="tag">主力</span><span class="lvl">3 熟练 / 1 了解</span></div>
+          <ul>
+            <li class="pro"><span class="nm">工程与脚本开发</span><span class="pct">熟练 92%</span><span class="meter"><i data-lv="92"></i></span></li>
+            <li class="pro"><span class="nm">数据处理</span><span class="pct">熟练 90%</span><span class="meter"><i data-lv="90"></i></span></li>
+            <li class="pro"><span class="nm">工具链搭建</span><span class="pct">熟练 85%</span><span class="meter"><i data-lv="85"></i></span></li>
+            <li><span class="nm">服务与接口</span><span class="pct">了解 55%</span><span class="meter"><i data-lv="55"></i></span></li>
+          </ul>
+        </article>
+
+        <article class="skill rv">
+          <span class="bgno" aria-hidden="true">Jv</span>
+          <div class="hd"><h3>Java</h3><span class="tag">业务</span><span class="lvl">2 熟练 / 2 了解</span></div>
+          <ul>
+            <li class="pro"><span class="nm">业务模块开发</span><span class="pct">熟练 88%</span><span class="meter"><i data-lv="88"></i></span></li>
+            <li class="pro"><span class="nm">面向对象设计</span><span class="pct">熟练 86%</span><span class="meter"><i data-lv="86"></i></span></li>
+            <li><span class="nm">接口组织</span><span class="pct">了解 58%</span><span class="meter"><i data-lv="58"></i></span></li>
+            <li><span class="nm">并发 / 集合基础</span><span class="pct">了解 52%</span><span class="meter"><i data-lv="52"></i></span></li>
+          </ul>
+        </article>
+
+        <article class="skill rv">
+          <span class="bgno" aria-hidden="true">AI</span>
+          <div class="hd"><h3>AI 应用</h3><span class="tag">方向</span><span class="lvl">3 熟练 / 1 了解</span></div>
+          <ul>
+            <li class="pro"><span class="nm">模型能力理解</span><span class="pct">熟练 88%</span><span class="meter"><i data-lv="88"></i></span></li>
+            <li class="pro"><span class="nm">数据流程设计</span><span class="pct">熟练 84%</span><span class="meter"><i data-lv="84"></i></span></li>
+            <li class="pro"><span class="nm">工程落地思路</span><span class="pct">熟练 86%</span><span class="meter"><i data-lv="86"></i></span></li>
+            <li><span class="nm">调用与集成</span><span class="pct">了解 56%</span><span class="meter"><i data-lv="56"></i></span></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+  <!-- ===================== 游戏实验室 ===================== -->
+  <section class="section" id="arcade">
+    <div class="wrap">
+      <div class="sechead rv">
+        <span class="no">04</span>
+        <h2>游戏实验室</h2>
+        <p>两个用原生 Canvas 手写的小游戏。没有游戏引擎、没有第三方库，直接点开就能玩。</p>
+      </div>
+
+      <div class="arcade">
+
+        <article class="game rv" id="gameA">
+          <div class="game-head">
+            <h3><em>A</em>引力弹弓</h3>
+            <span class="tag">物理模拟 · 关卡解谜</span>
+            <span class="best">最高关卡 <b id="ssBest">—</b></span>
+          </div>
+          <div class="stage">
+            <canvas id="ssCanvas" aria-label="引力弹弓游戏画面"></canvas>
+            <div class="veil" id="ssVeil">
+              <h4>用引力把自己甩出去</h4>
+              <p>拖拽瞄准、松手发射。恒星的引力会弯折你的航线——<b>直线飞不过去，得借引力甩</b>。<br>
+                 按顺序穿过所有光环，再飞进终点。<b>虚线会一路算到底，能通关时会变成金色</b>，照着它调角度就行。</p>
+              <button class="btn" id="ssStart" type="button">开始游戏</button>
+            </div>
+          </div>
+          <div class="game-foot">
+            <div class="hud">
+              <span>关卡 <b id="ssLevel">1 / 4</b></span>
+              <span>光环 <b id="ssGates" class="hl">0 / 1</b></span>
+              <span>尝试 <b id="ssTries">0</b></span>
+            </div>
+            <span class="hint">操作：在画布上按住往反方向拖拽（像弹弓一样），虚线是<b>预测轨迹</b>，松手发射。<b>预测会一路算到底：能通关时虚线变金色并提示</b>。按 <b>R</b> 重来本关。</span>
+          </div>
+        </article>
+
+        <article class="game rv" id="gameB">
+          <div class="game-head">
+            <h3><em>B</em>梯度下降大冒险</h3>
+            <span class="tag">AI 主题 · 策略</span>
+            <span class="best">历史最优 loss <b id="gdBest">—</b></span>
+          </div>
+          <div class="stage">
+            <canvas id="gdCanvas" aria-label="梯度下降游戏画面"></canvas>
+            <div class="veil" id="gdVeil">
+              <h4>你是一个优化器</h4>
+              <p>在<b>看不见深浅</b>的损失曲面上，靠梯度下降滚到最低点。学习率调大了会飞出去，调小了走不到底。<br>
+                 先点画布选一个起点，再用 <kbd>↑</kbd> <kbd>↓</kbd> 或滑条实时调学习率。</p>
+              <button class="btn" id="gdStart" type="button">开始下降</button>
+            </div>
+          </div>
+          <div class="game-foot">
+            <div class="hud">
+              <span>步数 <b id="gdSteps">0 / 600</b></span>
+              <span>当前 loss <b id="gdLoss" class="hl">—</b></span>
+              <span>全局最优 <b id="gdGlobal">—</b></span>
+            </div>
+            <div class="lrwrap">
+              <span>学习率</span>
+              <input id="gdLr" type="range" min="0" max="1000" value="742" aria-label="学习率" />
+              <b id="gdLrVal">0.01</b>
+            </div>
+            <span class="hint">起点可点选；<b>↑/↓</b> 实时调学习率，<b>空格</b> 暂停，<b>R</b> 重开。曲面每跑一次只会揭开你走过的地方。</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+
 
   <div class="wrap">
     <footer>
